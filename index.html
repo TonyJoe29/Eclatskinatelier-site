@@ -332,6 +332,156 @@
     background: var(--warm-white);
   }
 
+  /* WHERE TO */
+  .where-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 40px 0;
+  }
+  .where-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .where-card {
+    min-height: 250px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #EDE5DF;
+    text-decoration: none;
+    color: var(--charcoal);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .where-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 42px rgba(107,45,45,0.1);
+  }
+  .where-card small {
+    color: var(--blush-deep);
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .where-card h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--rose-dark);
+    font-size: 1.45rem;
+    font-weight: 400;
+    margin: 14px 0 10px;
+  }
+  .where-card p {
+    color: var(--taupe);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .where-card span {
+    color: var(--sage);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 26px;
+  }
+
+  /* BLOG PREVIEW */
+  .blog-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 62px 40px 0;
+  }
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 1.35fr 0.9fr;
+    gap: 34px;
+  }
+  .featured-post, .post-card {
+    background: white;
+    border: 1px solid #EDE5DF;
+    overflow: hidden;
+  }
+  .post-image {
+    min-height: 220px;
+    background: linear-gradient(135deg, #F5EDE8, #E8D8D1);
+    position: relative;
+    overflow: hidden;
+  }
+  .post-image::before {
+    content: attr(data-label);
+    position: absolute;
+    inset: 28px;
+    border: 1px solid rgba(107,45,45,0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(107,45,45,0.35);
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    text-align: center;
+  }
+  .post-content {
+    padding: 30px;
+  }
+  .post-meta {
+    color: var(--blush-deep);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .post-content h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--rose-dark);
+    font-size: 1.55rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .post-content p {
+    color: var(--taupe);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .post-link {
+    display: inline-block;
+    color: var(--sage);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 22px;
+  }
+  .post-list {
+    display: grid;
+    gap: 18px;
+  }
+  .post-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    min-height: 142px;
+  }
+  .post-card .post-image {
+    min-height: 142px;
+  }
+  .post-card .post-image::before {
+    inset: 16px;
+    font-size: 1.5rem;
+  }
+  .post-card .post-content {
+    padding: 22px;
+  }
+  .post-card .post-content h3 {
+    font-size: 1.1rem;
+  }
+  .post-card .post-content p {
+    font-size: 0.82rem;
+  }
+
   /* SHOP CATALOG */
   .catalog-section {
     max-width: 1200px;
@@ -438,7 +588,9 @@
   .product-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(107,45,45,0.1); }
 
   .product-img {
-    background: linear-gradient(145deg, #F2EBE7, #E8DDD8);
+    background-color: #F2EBE7;
+    background-position: center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -447,22 +599,26 @@
     overflow: hidden;
   }
   .product-img::before {
-    content: attr(data-catalog);
+    content: '';
     position: absolute;
-    inset: auto 22px 20px 22px;
-    font-family: 'DM Serif Display', serif;
-    color: rgba(107,45,45,0.18);
-    font-size: clamp(2rem, 5vw, 3.8rem);
-    line-height: 0.9;
-    text-align: center;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(44,36,32,0.08));
   }
+  .product-img[data-catalog="cleanse"] { background-image: url("assets/product-images/elemis-cleansing-balm.svg"); }
+  .product-img[data-catalog="mask"] { background-image: url("assets/product-images/biodance-mask.svg"); }
+  .product-img[data-catalog="acne"] { background-image: url("assets/product-images/hero-mighty-patch.svg"); }
+  .product-img[data-catalog="glow"] { background-image: url("assets/product-images/elf-halo-glow.svg"); }
+  .product-img[data-catalog="tone"] { background-image: url("assets/product-images/ordinary-glycolic.svg"); }
+  .product-img[data-catalog="jelly"] { background-image: url("assets/product-images/medicube-jelly.svg"); }
+  .product-img[data-catalog="lash"] { background-image: url("assets/product-images/maybelline-mascara.svg"); }
+  .product-img[data-catalog="towel"] { background-image: url("assets/product-images/clean-skin-towels.svg"); }
+  .product-img[data-catalog="lips"] { background-image: url("assets/product-images/laneige-lip-balm.svg"); }
+  .product-img[data-catalog="eyes"] { background-image: url("assets/product-images/grace-stella-eye.svg"); }
+  .product-img[data-catalog="body"] { background-image: url("assets/product-images/eos-lotion.svg"); }
+  .product-img[data-catalog="spf"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="scalp"] { background-image: url("assets/product-images/nizoral-shampoo.svg"); }
   .product-img-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: var(--taupe-light);
-    z-index: 1;
+    display: none;
   }
   .product-img-placeholder svg { width: 48px; height: 48px; opacity: 0.5; }
   .product-img-placeholder span {
@@ -484,6 +640,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1rem;
     font-weight: 600;
+    z-index: 2;
   }
 
   .trend-badge {
@@ -496,6 +653,40 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 600;
+    z-index: 2;
+  }
+
+  .product-tools {
+    background: var(--warm-white);
+    border: 1px solid #EDE5DF;
+    padding: 18px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .product-tools label {
+    color: var(--taupe);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .product-search {
+    flex: 1;
+    min-width: 240px;
+    border: 1px solid var(--taupe-light);
+    background: white;
+    color: var(--charcoal);
+    padding: 12px 14px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+  }
+  .result-count {
+    color: var(--taupe);
+    font-size: 0.8rem;
   }
 
   .product-info {
@@ -792,6 +983,8 @@
   /* RESPONSIVE */
   @media (max-width: 900px) {
     .main-wrap { grid-template-columns: 1fr; gap: 50px; }
+    .where-grid { grid-template-columns: 1fr; }
+    .blog-layout { grid-template-columns: 1fr; }
     .product-card { grid-template-columns: 1fr; }
     .product-img { min-height: 200px; }
     .hero-stats { grid-template-columns: 1fr; }
@@ -806,6 +999,8 @@
     .header-inner { padding: 0 20px; }
     .disclosure-strip { padding: 10px 20px; }
     .hero { padding: 70px 20px; }
+    .where-section { padding: 42px 20px 0; }
+    .blog-section { padding: 42px 20px 0; }
     .routine-section { padding: 42px 20px 0; }
     .catalog-section { padding: 42px 20px 0; }
     .main-wrap { padding: 50px 20px; }
@@ -814,6 +1009,10 @@
 
   @media (max-width: 560px) {
     .catalog-grid, .ingredients-grid { grid-template-columns: 1fr; }
+    .post-card { grid-template-columns: 1fr; }
+    .post-card .post-image { min-height: 180px; }
+    .product-tools { align-items: flex-start; flex-direction: column; }
+    .product-search { min-width: 0; width: 100%; }
     .section-head { align-items: flex-start; flex-direction: column; gap: 12px; }
     .section-head .line { width: 100%; flex: none; }
     .hero h1 { font-size: 2.45rem; }
@@ -833,6 +1032,8 @@
     <nav>
       <a href="#trending">Trending</a>
       <a href="#routines">Routines</a>
+      <a href="#blog">Blog</a>
+      <a href="#catalog">Shop</a>
       <a href="#ingredients">Ingredients</a>
       <a href="#about">About</a>
     </nav>
@@ -884,9 +1085,47 @@
     <a href="#" class="pill" data-filter="lip-care">Lip Care</a>
     <a href="#" class="pill" data-filter="bodycare">Bodycare</a>
     <a href="#" class="pill" data-filter="spf">SPF</a>
+    <a href="#" class="pill" data-filter="haircare">Haircare</a>
     <a href="#" class="pill" data-filter="under-20">Under $20</a>
   </div>
 </div>
+
+<!-- WHERE TO -->
+<section class="where-section" id="start">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">Where To?</p>
+      <h2>Choose The Next Beauty Move</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="where-grid">
+    <a class="where-card" href="#blog">
+      <div>
+        <small>The Blog</small>
+        <h3>Read Routine Guides</h3>
+        <p>Use posts for deeper Pinterest and Google traffic: routines, product roundups, ingredient explainers and seasonal guides.</p>
+      </div>
+      <span>Start reading</span>
+    </a>
+    <a class="where-card" href="#catalog">
+      <div>
+        <small>The Shop</small>
+        <h3>Browse Current Picks</h3>
+        <p>Catalog lanes make it easy to add new products without redesigning the page every week.</p>
+      </div>
+      <span>Shop categories</span>
+    </a>
+    <a class="where-card" href="#routines">
+      <div>
+        <small>Routine Builder</small>
+        <h3>Build A Simple Routine</h3>
+        <p>Turn each video into one clear routine path: barrier reset, acne basics, glass skin night or SPF glow.</p>
+      </div>
+      <span>Pick a routine</span>
+    </a>
+  </div>
+</section>
 
 <!-- ROUTINE PATHS -->
 <section class="routine-section" id="routines">
@@ -989,6 +1228,54 @@
   </div>
 </section>
 
+<!-- BLOG PREVIEW -->
+<section class="blog-section" id="blog">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">Latest Guides</p>
+      <h2>Posts To Build Next</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="blog-layout">
+    <article class="featured-post">
+      <div class="post-image" data-label="Night Routine"></div>
+      <div class="post-content">
+        <p class="post-meta">Featured Post · Cleansing Balm</p>
+        <h3>How To Build A Simple Night Routine Around A Cleansing Balm</h3>
+        <p>Use your Elemis Reel as the seed for a full blog post: first cleanse, gentle second cleanse, moisturizer and what to avoid when skin feels dry or dull.</p>
+        <a class="post-link" href="#trending">Shop the featured pick</a>
+      </div>
+    </article>
+    <div class="post-list">
+      <article class="post-card">
+        <div class="post-image" data-label="Acne"></div>
+        <div class="post-content">
+          <p class="post-meta">Next Post</p>
+          <h3>Acne Care Starter Kit Before Buying Too Many Actives</h3>
+          <p>Pimple patches, clean towels and gentle habits that are easy to film.</p>
+        </div>
+      </article>
+      <article class="post-card">
+        <div class="post-image" data-label="K-Beauty"></div>
+        <div class="post-content">
+          <p class="post-meta">Pinterest Post</p>
+          <h3>Glass Skin Night Routine With K-Beauty Amazon Finds</h3>
+          <p>Biodance, medicube and Laneige products grouped into one shoppable routine.</p>
+        </div>
+      </article>
+      <article class="post-card">
+        <div class="post-image" data-label="SPF"></div>
+        <div class="post-content">
+          <p class="post-meta">Seasonal Post</p>
+          <h3>Summer SPF And Glow Makeup That Works In One AM Routine</h3>
+          <p>A practical content lane for warm-weather Instagram and Pinterest search.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- MAIN CONTENT -->
 <div class="main-wrap">
   <main id="trending">
@@ -999,6 +1286,12 @@
         <h2>The Current Beauty Picks To Build Around</h2>
       </div>
       <div class="line"></div>
+    </div>
+
+    <div class="product-tools">
+      <label for="product-search">Find a product</label>
+      <input id="product-search" class="product-search" type="search" placeholder="Search by product, brand, category or routine">
+      <span class="result-count" id="result-count">13 picks shown</span>
     </div>
 
     <div class="products-grid">
@@ -1639,14 +1932,25 @@
 
 <script>
   function applyProductFilter(filter) {
+    const searchInput = document.getElementById('product-search');
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    let visibleCount = 0;
     document.querySelectorAll('.pill').forEach(p => {
       p.classList.toggle('active', (p.dataset.filter || 'all') === filter);
     });
     document.querySelectorAll('.product-card').forEach(card => {
       const categories = (card.dataset.category || '').split(' ');
-      const isVisible = filter === 'all' || categories.includes(filter);
+      const text = card.innerText.toLowerCase();
+      const categoryMatch = filter === 'all' || categories.includes(filter);
+      const searchMatch = !query || text.includes(query) || categories.join(' ').includes(query);
+      const isVisible = categoryMatch && searchMatch;
       card.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
     });
+    const count = document.getElementById('result-count');
+    if (count) {
+      count.textContent = `${visibleCount} ${visibleCount === 1 ? 'pick' : 'picks'} shown`;
+    }
   }
 
   // Pill filter interaction
@@ -1665,6 +1969,14 @@
       applyProductFilter(filter);
     });
   });
+
+  const searchInput = document.getElementById('product-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const active = document.querySelector('.pill.active');
+      applyProductFilter(active ? active.dataset.filter || 'all' : 'all');
+    });
+  }
 
   // Smooth scroll for nav links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
