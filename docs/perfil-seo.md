@@ -5,7 +5,8 @@ Fecha: 2026-05-21
 ## Estado de acceso
 
 - Instagram activo una verificacion/recaptcha durante el login. No se debe intentar saltar esa verificacion; requiere resolucion manual del dueno de la cuenta.
-- Pinterest no permitio escritura automatica en los campos de login desde el navegador interno. Si se necesita editar el perfil directamente, conviene hacerlo manualmente o abrir la sesion en el navegador del usuario.
+- Instagram quedo accesible despues de la verificacion manual y se actualizo la bio.
+- Pinterest quedo accesible despues de la verificacion manual y se actualizo la descripcion del perfil.
 - GitHub esta conectado como perfil `TonyJoe29`, pero el conector no muestra repositorios instalados. Para subir a GitHub privado hace falta crear/autorizar un repositorio privado.
 
 ## Lo observado
@@ -29,7 +30,8 @@ Fecha: 2026-05-21
 ### Pinterest
 
 - Perfil publico detectado por titulo: `Eclat Skin Atelier (ElatSkinAtelier)`.
-- No se pudo leer todo el contenido publico de Pinterest por limitaciones de carga/bloqueo, asi que para auditoria fina conviene usar captura de pantalla del perfil y de Analytics.
+- Bio actualizada: "Simple skincare routines, Amazon beauty finds, K-beauty, SPF, acne care, glow makeup and affordable product guides for everyday routines."
+- Tableros observados: `Makeups must haves`, `Everyday Skincare Routine`, `K-beauty`, `Luxury Skincare Finds`.
 
 ## Bio recomendada para Instagram
 
@@ -50,6 +52,12 @@ Opcion mas SEO:
 Amazon beauty + skincare routines  
 K-beauty, sunscreen, acne care & glow makeup  
 Shop weekly picks below
+
+Bio aplicada:
+
+Amazon beauty + skincare routines  
+K-beauty, SPF, acne care & glow makeup  
+Affiliate links + weekly picks below
 
 ## Nombre SEO recomendado en Instagram
 
