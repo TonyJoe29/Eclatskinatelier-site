@@ -2,6 +2,12 @@
 
 Fecha: 2026-05-21
 
+## Estado de acceso
+
+- Instagram activo una verificacion/recaptcha durante el login. No se debe intentar saltar esa verificacion; requiere resolucion manual del dueno de la cuenta.
+- Pinterest no permitio escritura automatica en los campos de login desde el navegador interno. Si se necesita editar el perfil directamente, conviene hacerlo manualmente o abrir la sesion en el navegador del usuario.
+- GitHub esta conectado como perfil `TonyJoe29`, pero el conector no muestra repositorios instalados. Para subir a GitHub privado hace falta crear/autorizar un repositorio privado.
+
 ## Lo observado
 
 ### Instagram
