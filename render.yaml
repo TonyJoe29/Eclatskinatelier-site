@@ -1,0 +1,27 @@
+services:
+  - type: worker
+    name: eclatskinatelier-telegram-bot
+    runtime: node
+    rootDir: telegram-bot
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_ADMIN_CHAT_ID
+        sync: false
+      - key: TELEGRAM_GROUP_CHAT_ID
+        sync: false
+      - key: AMAZON_ASSOCIATE_TAG
+        value: luxeskinateli-20
+      - key: POST_LANGUAGE
+        value: en
+      - key: MIN_DISCOUNT_PERCENT
+        value: "5"
+      - key: MIN_REVIEW_COUNT
+        value: "1000"
+      - key: MIN_RATING
+        value: "4"

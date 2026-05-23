@@ -4,4 +4,8 @@ Thumbs.db
 node_modules/
 .env
 .env.*
+!.env.example
+!telegram-bot/.env.example
 videos/
+telegram-bot/data/*.json
+!telegram-bot/data/.gitkeep

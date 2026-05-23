@@ -1,0 +1,14 @@
+{
+  "name": "eclatskinatelier-telegram-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Telegram approval bot for EclatSkinAtelier Amazon affiliate offers.",
+  "scripts": {
+    "start": "node src/bot.mjs",
+    "check": "node --check src/config.mjs && node --check src/store.mjs && node --check src/offer-parser.mjs && node --check src/telegram-client.mjs && node --check src/bot.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
