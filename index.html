@@ -30,7 +30,16 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  section,
+  main,
+  aside[id] {
+    scroll-margin-top: 96px;
+  }
 
   body {
     background: var(--cream);
@@ -104,6 +113,26 @@
   }
   nav a:hover { color: var(--rose); }
   nav a:hover::after { right: 0; }
+
+  .mobile-menu-btn {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--taupe-light);
+    background: white;
+    color: var(--rose-dark);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .mobile-menu-btn span {
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    display: block;
+  }
 
   .disclosure-strip {
     background: var(--charcoal);
@@ -332,7 +361,7 @@
     background: var(--warm-white);
   }
 
-  /* WHERE TO */
+  /* START HERE */
   .where-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -340,12 +369,12 @@
   }
   .where-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
   }
   .where-card {
-    min-height: 250px;
-    padding: 30px;
+    min-height: 216px;
+    padding: 24px;
     background: white;
     border: 1px solid #EDE5DF;
     text-decoration: none;
@@ -369,13 +398,14 @@
   .where-card h3 {
     font-family: 'DM Serif Display', serif;
     color: var(--rose-dark);
-    font-size: 1.45rem;
+    font-size: 1.22rem;
     font-weight: 400;
     margin: 14px 0 10px;
+    line-height: 1.18;
   }
   .where-card p {
     color: var(--taupe);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     line-height: 1.7;
   }
   .where-card span {
@@ -385,6 +415,210 @@
     text-transform: uppercase;
     font-weight: 600;
     margin-top: 26px;
+  }
+
+  /* TRUST + EDITORIAL MODULES */
+  .trust-section,
+  .drops-section,
+  .edit-section,
+  .concern-section,
+  .celebrity-section,
+  .comparison-section,
+  .leadmagnet-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 40px 0;
+  }
+  .trust-grid,
+  .drops-grid,
+  .edit-grid,
+  .concern-grid,
+  .celebrity-grid,
+  .comparison-grid {
+    display: grid;
+    gap: 18px;
+  }
+  .trust-grid {
+    grid-template-columns: 1.1fr 0.9fr 0.9fr;
+  }
+  .trust-card,
+  .drop-card,
+  .edit-card,
+  .concern-card,
+  .celebrity-card,
+  .comparison-card,
+  .leadmagnet-box {
+    background: white;
+    border: 1px solid #EDE5DF;
+    padding: 26px;
+  }
+  .drops-grid {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
+  .drop-card {
+    padding: 0;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--charcoal);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .drop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 42px rgba(107,45,45,0.1);
+  }
+  .drop-art {
+    min-height: 250px;
+    background-color: #F2EBE7;
+    background-position: center;
+    background-size: cover;
+  }
+  .drop-art[data-catalog="cleanse"] { background-image: url("assets/product-images/elemis-cleansing-balm.svg"); }
+  .drop-art[data-catalog="mask"] { background-image: url("assets/product-images/biodance-mask.svg"); }
+  .drop-art[data-catalog="towel"] { background-image: url("assets/product-images/clean-skin-towels.svg"); }
+  .drop-art[data-catalog="laroche"] { background-image: url("assets/product-images/laroche-anthelios.svg"); }
+  .drop-art[data-catalog="niacinamide"] { background-image: url("assets/product-images/ordinary-glycolic.svg"); }
+  .drop-art[data-catalog="aquaphor"] { background-image: url("assets/product-images/eos-lotion.svg"); }
+  .drop-art[data-catalog="cerave"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .drop-art[data-catalog="laneige-bouncy"] { background-image: url("assets/product-images/laneige-lip-balm.svg"); }
+  .drop-art[data-catalog="neutrogena-tint"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .drop-art[data-catalog="cleanse"][data-official="true"] { background-image: url("https://assets.elemis.com/image/upload/w_900,c_fill,g_auto,q_100,f_auto/assets/asset/57169121-7cd5-4100-849a-633639b404d2/60087_Pro-Collagen-Cleansing-Balm_100g_LID-ON_ROW.png"), url("assets/product-images/elemis-cleansing-balm.svg"); }
+  .drop-art[data-catalog="mask"][data-official="true"] { background-image: url("https://biodance.com/cdn/shop/files/2510_4_388c8df8-fc8d-45eb-af91-a9d884fad801.jpg?v=1761116311&width=1200"), url("assets/product-images/biodance-mask.svg"); }
+  .drop-art[data-catalog="towel"][data-official="true"] { background-image: url("https://cleanskinclub.com/cdn/shop/files/FINAL_CTXL_1_1024x1024.jpg?v=1762200602"), url("assets/product-images/clean-skin-towels.svg"); }
+  .drop-art[data-catalog="laroche"][data-official="true"] { background-image: url("https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg?q=80&sfrm=jpg&sh=900&sm=cut&sw=900"), url("assets/product-images/laroche-anthelios.svg"); }
+  .drop-art[data-catalog="niacinamide"][data-official="true"] { background-image: url("https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dwce8a7cdf/Images/products/The%20Ordinary/rdn-niacinamide-10pct-zinc-1pct-30ml.png?sw=900&sh=900&sm=fit"), url("assets/product-images/ordinary-glycolic.svg"); }
+  .drop-art[data-catalog="aquaphor"][data-official="true"] { background-image: url("https://images-1.eucerin.com/~/media/eucerin%20relaunch%20media/media-center-items/c/5/b/5d8bbc31f7d44dd0963c288b416d300d-screen.jpg?db=web&hash=6405a1adcac9555f76a3d72fe78e05ba"), url("assets/product-images/eos-lotion.svg"); }
+  .drop-art[data-catalog="cerave"][data-official="true"] { background-image: url("https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/products-v3/daily-moisturizing-lotion/700x700/cerave_daily_moisturizing_lotion_12oz_front_-700x700-v2.jpg?rev=5fb61e1db7fe49fb9faf308c5f583d65"), url("assets/product-images/eltamd-spf.svg"); }
+  .drop-art[data-catalog="laneige-bouncy"][data-official="true"] { background-image: url("https://us.laneige.com/cdn/shop/files/B0D84WSNQK.MAIN.jpg?v=1722537722"), url("assets/product-images/laneige-lip-balm.svg"); }
+  .drop-art[data-catalog="neutrogena-tint"][data-official="true"] { background-image: url("https://images.ctfassets.net/bcjr30vxh6td/5E7AnnVFu20EME9N78rmqA/7e0c6d6ba27b6927bc336503c0cc6055/NTG_086800064114_US_Purescreen_Face_SPF30_Light_1.1OZ_00000.webp?fm=webp&w=1024"), url("assets/product-images/eltamd-spf.svg"); }
+  .drop-art[data-official="true"] {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .drop-copy {
+    padding: 22px;
+  }
+  .drop-copy small {
+    color: var(--blush-deep);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .drop-copy h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--rose-dark);
+    font-size: 1.16rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 10px 0 8px;
+  }
+  .drop-copy p {
+    color: var(--taupe);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  .trust-card.featured {
+    background: var(--rose-dark);
+    color: white;
+  }
+  .trust-card h3,
+  .edit-card h3,
+  .concern-card h3,
+  .celebrity-card h3,
+  .comparison-card h3,
+  .leadmagnet-box h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--rose-dark);
+    font-size: 1.22rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .trust-card.featured h3 { color: white; }
+  .trust-card p,
+  .edit-card p,
+  .concern-card p,
+  .celebrity-card p,
+  .comparison-card p,
+  .leadmagnet-box p {
+    color: var(--taupe);
+    font-size: 0.84rem;
+    line-height: 1.7;
+  }
+  .trust-card.featured p { color: rgba(255,255,255,0.78); }
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .trust-badge {
+    border: 1px solid var(--sage-light);
+    color: var(--sage);
+    background: var(--warm-white);
+    padding: 5px 10px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .trust-card.featured .trust-badge {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.22);
+    color: white;
+  }
+  .edit-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .edit-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 236px;
+  }
+  .edit-card small,
+  .concern-card small,
+  .celebrity-card small,
+  .comparison-card small {
+    color: var(--blush-deep);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .edit-card a,
+  .celebrity-card a,
+  .comparison-card a,
+  .leadmagnet-box a {
+    color: var(--sage);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 20px;
+  }
+  .concern-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .celebrity-grid,
+  .comparison-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .leadmagnet-box {
+    background: linear-gradient(135deg, #FDF9F5, #F2E8E4);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+  .leadmagnet-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   /* BLOG PREVIEW */
@@ -616,7 +850,36 @@
   .product-img[data-catalog="eyes"] { background-image: url("assets/product-images/grace-stella-eye.svg"); }
   .product-img[data-catalog="body"] { background-image: url("assets/product-images/eos-lotion.svg"); }
   .product-img[data-catalog="spf"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="laroche"] { background-image: url("assets/product-images/laroche-anthelios.svg"); }
   .product-img[data-catalog="scalp"] { background-image: url("assets/product-images/nizoral-shampoo.svg"); }
+  .product-img[data-catalog="niacinamide"] { background-image: url("assets/product-images/ordinary-glycolic.svg"); }
+  .product-img[data-catalog="aquaphor"] { background-image: url("assets/product-images/eos-lotion.svg"); }
+  .product-img[data-catalog="cerave"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="laneige-bouncy"] { background-image: url("assets/product-images/laneige-lip-balm.svg"); }
+  .product-img[data-catalog="neutrogena-tint"] { background-image: url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="cleanse"][data-official="true"] { background-image: url("https://assets.elemis.com/image/upload/w_900,c_fill,g_auto,q_100,f_auto/assets/asset/57169121-7cd5-4100-849a-633639b404d2/60087_Pro-Collagen-Cleansing-Balm_100g_LID-ON_ROW.png"), url("assets/product-images/elemis-cleansing-balm.svg"); }
+  .product-img[data-catalog="mask"][data-official="true"] { background-image: url("https://biodance.com/cdn/shop/files/2510_4_388c8df8-fc8d-45eb-af91-a9d884fad801.jpg?v=1761116311&width=1200"), url("assets/product-images/biodance-mask.svg"); }
+  .product-img[data-catalog="towel"][data-official="true"] { background-image: url("https://cleanskinclub.com/cdn/shop/files/FINAL_CTXL_1_1024x1024.jpg?v=1762200602"), url("assets/product-images/clean-skin-towels.svg"); }
+  .product-img[data-catalog="laroche"][data-official="true"] { background-image: url("https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg?q=80&sfrm=jpg&sh=900&sm=cut&sw=900"), url("assets/product-images/laroche-anthelios.svg"); }
+  .product-img[data-catalog="niacinamide"][data-official="true"] { background-image: url("https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dwce8a7cdf/Images/products/The%20Ordinary/rdn-niacinamide-10pct-zinc-1pct-30ml.png?sw=900&sh=900&sm=fit"), url("assets/product-images/ordinary-glycolic.svg"); }
+  .product-img[data-catalog="aquaphor"][data-official="true"] { background-image: url("https://images-1.eucerin.com/~/media/eucerin%20relaunch%20media/media-center-items/c/5/b/5d8bbc31f7d44dd0963c288b416d300d-screen.jpg?db=web&hash=6405a1adcac9555f76a3d72fe78e05ba"), url("assets/product-images/eos-lotion.svg"); }
+  .product-img[data-catalog="cerave"][data-official="true"] { background-image: url("https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/products-v3/daily-moisturizing-lotion/700x700/cerave_daily_moisturizing_lotion_12oz_front_-700x700-v2.jpg?rev=5fb61e1db7fe49fb9faf308c5f583d65"), url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="laneige-bouncy"][data-official="true"] { background-image: url("https://us.laneige.com/cdn/shop/files/B0D84WSNQK.MAIN.jpg?v=1722537722"), url("assets/product-images/laneige-lip-balm.svg"); }
+  .product-img[data-catalog="neutrogena-tint"][data-official="true"] { background-image: url("https://images.ctfassets.net/bcjr30vxh6td/5E7AnnVFu20EME9N78rmqA/7e0c6d6ba27b6927bc336503c0cc6055/NTG_086800064114_US_Purescreen_Face_SPF30_Light_1.1OZ_00000.webp?fm=webp&w=1024"), url("assets/product-images/eltamd-spf.svg"); }
+  .product-img[data-catalog="acne"][data-official="true"] { background-image: url("https://cdn.accentuate.io/11723218878506/1621370114488/Product-Thumbnail---MPO.png?v=1681752719090"), url("assets/product-images/hero-mighty-patch.svg"); }
+  .product-img[data-catalog="glow"][data-official="true"] { background-image: url("https://www.elfcosmetics.com/dw/image/v2/BBXC_PRD/on/demandware.static/-/Sites-elf-master/default/dw2aabd9eb/2022/HaloGlowLiquidFilter/82113_Halo_Glow_Liquid_Filter_Fair/82113_OpenA_R.png?sw=700"), url("assets/product-images/elf-halo-glow.svg"); }
+  .product-img[data-catalog="tone"][data-official="true"] { background-image: url("https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dw8b57fa2b/Images/products/The%20Ordinary/ord-glyc-acid-7pct-100ml-Aug-UPC.png?sw=900&sh=900&sm=fit"), url("assets/product-images/ordinary-glycolic.svg"); }
+  .product-img[data-catalog="jelly"][data-official="true"] { background-image: url("https://medicube.us/cdn/shop/files/jelly50ml_th2_1.jpg?v=1766563329"), url("assets/product-images/medicube-jelly.svg"); }
+  .product-img[data-catalog="lash"][data-official="true"] { background-image: url("https://www.maybelline.com/-/media/project/loreal/brand-sites/mny/americas/us/eye-makeup/mascara/lash-sensational-sky-high-washable-mascara-makeup/update-march-2026/navy-records/update/maybelline-lash-sensational-sky-high-pdp-785-navyrecords-41554103267-packshot-(1).jpg?rev=180e1b4b8f79440a945132eba411a43f"), url("assets/product-images/maybelline-mascara.svg"); }
+  .product-img[data-catalog="lips"][data-official="true"] { background-image: url("https://us.laneige.com/cdn/shop/files/2_4_a868073f-eec2-4ad6-9f6e-0bdc24ebfb3c.jpg?v=1773238978"), url("assets/product-images/laneige-lip-balm.svg"); }
+  .product-img[data-catalog="eyes"][data-official="true"] { background-image: url("https://www.graceandstella.com/cdn/shop/files/under-eye-masks-for-puffy-eyes-7837933.jpg?v=1768876042"), url("assets/product-images/grace-stella-eye.svg"); }
+  .product-img[data-catalog="body"][data-official="true"] { background-image: url("https://evolutionofsmooth.com/cdn/shop/files/VanillaCashmereBL_2.jpg?v=1758024162"), url("assets/product-images/eos-lotion.svg"); }
+  .product-img[data-catalog="scalp"][data-official="true"] { background-image: url("https://nizoral.com/wp-content/uploads/2024/02/NIZ_Carton_7oz_21902_051822_OT_2.png"), url("assets/product-images/nizoral-shampoo.svg"); }
+  .product-img[data-official="true"] {
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
   .product-img-placeholder {
     display: none;
   }
@@ -749,6 +1012,44 @@
     color: var(--sage);
     border: 1px solid var(--sage-light);
     padding: 4px 12px;
+    font-weight: 500;
+  }
+
+  .product-quick {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #EDE5DF;
+    border: 1px solid #EDE5DF;
+    margin: 0 0 18px;
+  }
+  .product-quick div {
+    background: var(--warm-white);
+    padding: 12px;
+  }
+  .product-quick dt {
+    color: var(--blush-deep);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .product-quick dd {
+    color: var(--charcoal);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+  .skip-note {
+    color: var(--taupe);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    border-left: 2px solid var(--blush);
+    padding-left: 12px;
+    margin-bottom: 22px;
+  }
+  .skip-note strong {
+    color: var(--rose-dark);
     font-weight: 500;
   }
 
@@ -980,12 +1281,34 @@
     font-style: italic;
   }
 
+  .mobile-bottom-cta {
+    display: none;
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    z-index: 90;
+    background: var(--rose-dark);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 14px 36px rgba(44,36,32,0.24);
+    text-decoration: none;
+    padding: 13px 18px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 900px) {
     .main-wrap { grid-template-columns: 1fr; gap: 50px; }
-    .where-grid { grid-template-columns: 1fr; }
+    .where-grid, .trust-grid, .drops-grid, .edit-grid, .concern-grid, .celebrity-grid, .comparison-grid { grid-template-columns: 1fr; }
     .blog-layout { grid-template-columns: 1fr; }
     .product-card { grid-template-columns: 1fr; }
+    .product-quick { grid-template-columns: 1fr; }
     .product-img { min-height: 200px; }
     .hero-stats { grid-template-columns: 1fr; }
     .routine-grid { grid-template-columns: 1fr; }
@@ -995,16 +1318,35 @@
     .footer-bottom { align-items: flex-start; flex-direction: column; gap: 14px; }
     .product-footer { align-items: flex-start; flex-direction: column; }
     .affiliate-btn { justify-content: center; width: 100%; }
-    nav { display: none; }
+    nav {
+      display: none;
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--taupe-light);
+      padding: 18px 20px 22px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    nav.open { display: flex; }
+    .mobile-menu-btn { display: flex; }
     .header-inner { padding: 0 20px; }
     .disclosure-strip { padding: 10px 20px; }
     .hero { padding: 70px 20px; }
     .where-section { padding: 42px 20px 0; }
+    .trust-section, .drops-section, .edit-section, .concern-section, .celebrity-section, .comparison-section, .leadmagnet-section { padding: 42px 20px 0; }
+    .leadmagnet-box { grid-template-columns: 1fr; }
+    .leadmagnet-actions { justify-content: flex-start; }
     .blog-section { padding: 42px 20px 0; }
     .routine-section { padding: 42px 20px 0; }
     .catalog-section { padding: 42px 20px 0; }
     .main-wrap { padding: 50px 20px; }
     .ingredients-section { padding: 0 20px 60px; }
+    .mobile-bottom-cta { display: flex; }
+    body { padding-bottom: 72px; }
   }
 
   @media (max-width: 560px) {
@@ -1029,12 +1371,19 @@
       ÉclatSkinAtelier
       <span>Amazon Beauty Routines</span>
     </a>
-    <nav>
+    <button class="mobile-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="site-nav">
+      <a href="#start">Start Here</a>
       <a href="#trending">Trending</a>
       <a href="#routines">Routines</a>
+      <a href="#weekly-edit">Weekly Edit</a>
+      <a href="#celebrity">Celebrity Beauty</a>
       <a href="#blog">Blog</a>
       <a href="#catalog">Shop</a>
-      <a href="#ingredients">Ingredients</a>
       <a href="#about">About</a>
     </nav>
   </div>
@@ -1049,24 +1398,24 @@
 <!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">May 2026 · Amazon US Beauty</p>
-  <h1>Simple Routines For<br><em>Glow, SPF & Barrier Care</em></h1>
-  <p class="hero-sub">Curated skincare and beauty finds for shoppers who want fewer steps, smarter ingredients, and Amazon links that are easy to revisit from TikTok, Instagram and Pinterest.</p>
+  <h1>Beauty Finds I Would<br><em>Actually Build Around</em></h1>
+  <p class="hero-sub">I look for skincare, makeup and bodycare that are easy to understand, easy to use, and worth saving before your next Amazon order.</p>
   <div class="hero-cta">
-    <a href="#routines" class="btn-primary">Build a Routine</a>
+    <a href="#start" class="btn-primary">Start Here</a>
     <a href="#trending" class="btn-secondary">Shop Current Picks</a>
   </div>
   <div class="hero-stats">
     <div class="stat-card">
-      <strong>Barrier first</strong>
-      <span>Gentle cleansers, ceramides, hydration and recovery products before aggressive actives.</span>
+      <strong>Routine first</strong>
+      <span>Each pick has a clear place: AM, PM, weekly, before makeup or after shower.</span>
     </div>
     <div class="stat-card">
-      <strong>Summer ready</strong>
-      <span>SPF, skin tints, body care and sweat-friendly makeup are the first content lane.</span>
+      <strong>Clear labels</strong>
+      <span>Products are marked as tested, researched, trending, under-$20 or beginner-friendly.</span>
     </div>
     <div class="stat-card">
-      <strong>Short-form friendly</strong>
-      <span>Every pick can become one Reel, one TikTok, one Pin and one shoppable page update.</span>
+      <strong>No miracle talk</strong>
+      <span>Helpful beauty notes, soft claims and honest skip-if guidance before the shop link.</span>
     </div>
   </div>
 </section>
@@ -1077,7 +1426,11 @@
     <span class="cat-label">Browse by:</span>
     <a href="#" class="pill active" data-filter="all">All</a>
     <a href="#" class="pill" data-filter="skincare">Skincare</a>
+    <a href="#" class="pill" data-filter="beginner-friendly">Beginner</a>
+    <a href="#" class="pill" data-filter="barrier">Barrier</a>
     <a href="#" class="pill" data-filter="makeup">Makeup</a>
+    <a href="#" class="pill" data-filter="acne">Acne</a>
+    <a href="#" class="pill" data-filter="glow">Glow</a>
     <a href="#" class="pill" data-filter="cleanser">Cleansers</a>
     <a href="#" class="pill" data-filter="serum">Serums</a>
     <a href="#" class="pill" data-filter="eye-care">Eye Care</a>
@@ -1087,43 +1440,178 @@
     <a href="#" class="pill" data-filter="spf">SPF</a>
     <a href="#" class="pill" data-filter="haircare">Haircare</a>
     <a href="#" class="pill" data-filter="under-20">Under $20</a>
+    <a href="#" class="pill" data-filter="celebrity">Celebrity</a>
+    <a href="#" class="pill" data-filter="weekend-edit">Weekend Edit</a>
   </div>
 </div>
 
-<!-- WHERE TO -->
+<!-- TODAY'S SOCIAL DROPS -->
+<section class="drops-section" id="today-drops">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">May 23, 2026 · 5 Pins & 2 Reels</p>
+      <h2>Today's Reviewed Beauty Picks</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="drops-grid">
+    <a class="drop-card" href="#trending" data-filter-link="serum">
+      <div class="drop-art" data-catalog="niacinamide" data-official="true"></div>
+      <div class="drop-copy">
+        <small>Serum / Acne basics</small>
+        <h3>The Ordinary Niacinamide 10% + Zinc</h3>
+        <p>A beginner-friendly serum lane for oiliness, pores and acne basics without stacking too many actives.</p>
+      </div>
+    </a>
+    <a class="drop-card" href="#trending" data-filter-link="bodycare">
+      <div class="drop-art" data-catalog="aquaphor" data-official="true"></div>
+      <div class="drop-copy">
+        <small>Barrier / Dry skin</small>
+        <h3>Aquaphor Healing Ointment</h3>
+        <p>A repeat-buy repair pick for lips, dry patches, slugging content and simple barrier support.</p>
+      </div>
+    </a>
+    <a class="drop-card" href="#trending" data-filter-link="bodycare">
+      <div class="drop-art" data-catalog="cerave" data-official="true"></div>
+      <div class="drop-copy">
+        <small>Moisturizer</small>
+        <h3>CeraVe Daily Moisturizing Lotion</h3>
+        <p>A practical ceramide moisturizer for face/body basics, beginner routines and dry-skin comfort.</p>
+      </div>
+    </a>
+    <a class="drop-card" href="#trending" data-filter-link="lip-care">
+      <div class="drop-art" data-catalog="laneige-bouncy" data-official="true"></div>
+      <div class="drop-copy">
+        <small>K-beauty lip care</small>
+        <h3>LANEIGE Bouncy & Firm Lip Treatment</h3>
+        <p>A visual lip-care pick for glossy texture, bag essentials and K-beauty hydration posts.</p>
+      </div>
+    </a>
+    <a class="drop-card" href="#trending" data-filter-link="spf">
+      <div class="drop-art" data-catalog="neutrogena-tint" data-official="true"></div>
+      <div class="drop-copy">
+        <small>Tinted SPF</small>
+        <h3>Neutrogena Purescreen+ Mineral UV Tint</h3>
+        <p>A budget-friendly SPF tint angle for makeup layering, shade checks and summer skincare.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- START HERE -->
 <section class="where-section" id="start">
   <div class="section-head">
     <div>
-      <p class="section-eyebrow">Where To?</p>
-      <h2>Choose The Next Beauty Move</h2>
+      <p class="section-eyebrow">Start Here</p>
+      <h2>Not Sure What To Buy First?</h2>
     </div>
     <div class="line"></div>
   </div>
   <div class="where-grid">
-    <a class="where-card" href="#blog">
+    <a class="where-card" href="#trending" data-filter-link="beginner-friendly">
       <div>
-        <small>The Blog</small>
-        <h3>Read Routine Guides</h3>
-        <p>Use posts for deeper Pinterest and Google traffic: routines, product roundups, ingredient explainers and seasonal guides.</p>
+        <small>Beginner Skincare</small>
+        <h3>I want a simple routine</h3>
+        <p>Start with cleanser, moisturizer, SPF and one realistic add-on instead of a long product list.</p>
       </div>
-      <span>Start reading</span>
+      <span>Browse beginner picks</span>
     </a>
-    <a class="where-card" href="#catalog">
+    <a class="where-card" href="#trending" data-filter-link="acne">
       <div>
-        <small>The Shop</small>
-        <h3>Browse Current Picks</h3>
-        <p>Catalog lanes make it easy to add new products without redesigning the page every week.</p>
+        <small>Acne Basics</small>
+        <h3>I want spot-care help</h3>
+        <p>Pimple patches, cleaner routine habits and gentle expectations before buying stronger actives.</p>
       </div>
-      <span>Shop categories</span>
+      <span>Filter acne picks</span>
     </a>
-    <a class="where-card" href="#routines">
+    <a class="where-card" href="#trending" data-filter-link="k-beauty">
       <div>
-        <small>Routine Builder</small>
-        <h3>Build A Simple Routine</h3>
-        <p>Turn each video into one clear routine path: barrier reset, acne basics, glass skin night or SPF glow.</p>
+        <small>K-Beauty</small>
+        <h3>I want glass-skin ideas</h3>
+        <p>Hydration-heavy masks, jelly textures and simple PM steps that film beautifully.</p>
       </div>
-      <span>Pick a routine</span>
+      <span>See K-beauty</span>
     </a>
+    <a class="where-card" href="#trending" data-filter-link="under-20">
+      <div>
+        <small>Budget Beauty</small>
+        <h3>I want makeup under $20</h3>
+        <p>Drugstore mascara, glow base and easy visible products for Reels and Pinterest.</p>
+      </div>
+      <span>Shop under $20</span>
+    </a>
+    <a class="where-card" href="#trending" data-filter-link="spf">
+      <div>
+        <small>SPF + Makeup</small>
+        <h3>I want SPF that layers well</h3>
+        <p>Summer-friendly sunscreen content focused on texture, tint and makeup compatibility.</p>
+      </div>
+      <span>See SPF picks</span>
+    </a>
+    <a class="where-card" href="#trending" data-filter-link="bodycare">
+      <div>
+        <small>Bodycare</small>
+        <h3>I want soft vanilla bodycare</h3>
+        <p>After-shower products, scent-led routines and affordable bodycare worth saving.</p>
+      </div>
+      <span>Shop bodycare</span>
+    </a>
+    <a class="where-card" href="#trending" data-filter-link="celebrity">
+      <div>
+        <small>Celebrity-Inspired</small>
+        <h3>I want the vibe, not the exact shelf</h3>
+        <p>Soft glam, glazed skin and quiet-luxury beauty built from Amazon-friendly alternatives.</p>
+      </div>
+      <span>Browse the vibe</span>
+    </a>
+    <a class="where-card" href="#trending" data-filter-link="weekend-edit">
+      <div>
+        <small>Weekly Edit</small>
+        <h3>I want the five picks to post next</h3>
+        <p>A short weekly shelf for skincare, makeup, bodycare, K-beauty and under-$20 content.</p>
+      </div>
+      <span>Browse weekend edit</span>
+    </a>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-section" id="trust">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">How I Choose Products</p>
+      <h2>Helpful First, Shoppable Second</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="trust-grid">
+    <article class="trust-card featured">
+      <h3>I look for products that fit real routines, not just viral moments.</h3>
+      <p>Before adding a pick, I check where it belongs in a routine, who it makes sense for, who may want to skip it, and whether the product has a clear content angle beyond the hype.</p>
+      <div class="badge-row">
+        <span class="trust-badge">Routine Fit</span>
+        <span class="trust-badge">Soft Claims</span>
+        <span class="trust-badge">Clear Skip Notes</span>
+      </div>
+    </article>
+    <article class="trust-card">
+      <h3>Tested vs researched</h3>
+      <p>Some picks are products I have content for, while others are researched from trend signals, product claims, reviews and routine fit. I label the difference clearly so the page does not pretend everything is a personal review.</p>
+      <div class="badge-row">
+        <span class="trust-badge">Uploaded Content</span>
+        <span class="trust-badge">Researched Pick</span>
+        <span class="trust-badge">Amazon Find</span>
+      </div>
+    </article>
+    <article class="trust-card">
+      <h3>What I avoid</h3>
+      <p>No “cures,” no guaranteed results and no exact celebrity-routine claims without a source. The goal is to help someone choose the next sensible product, not make beauty feel more confusing.</p>
+      <div class="badge-row">
+        <span class="trust-badge">Beginner Friendly</span>
+        <span class="trust-badge">Under $20</span>
+        <span class="trust-badge">Trending</span>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -1142,34 +1630,105 @@
         <h3>Barrier Reset</h3>
         <p>Gentle cleanser, hydrating cream and low-irritation basics for sensitive or over-exfoliated skin.</p>
       </div>
-      <a href="#trending">See barrier picks</a>
+      <a href="#trending" data-filter-link="barrier">See barrier picks</a>
     </div>
     <div class="routine-card">
       <div>
         <h3>Glass Skin Night</h3>
         <p>K-beauty masks, collagen textures and hydration-heavy formulas for an easy PM routine.</p>
       </div>
-      <a href="#trending">See K-beauty picks</a>
+      <a href="#trending" data-filter-link="k-beauty">See K-beauty picks</a>
     </div>
     <div class="routine-card">
       <div>
         <h3>Acne Basics</h3>
         <p>Pimple patches, clean towels and simple spot-care habits before adding stronger actives.</p>
       </div>
-      <a href="#trending">See acne picks</a>
+      <a href="#trending" data-filter-link="acne">See acne picks</a>
     </div>
     <div class="routine-card">
       <div>
         <h3>SPF + Glow</h3>
         <p>Light coverage, summer SPF habits and lip products that work well in short daily routines.</p>
       </div>
-      <a href="#trending">See glow picks</a>
+      <a href="#trending" data-filter-link="glow">See glow picks</a>
+    </div>
+    <div class="routine-card">
+      <div>
+        <h3>Lazy Night Reset</h3>
+        <p>Makeup removal, clean towels and one comforting moisturizer step for nights when simple is the only realistic plan.</p>
+      </div>
+      <a href="#trending" data-filter-link="cleanser">See night picks</a>
+    </div>
+    <div class="routine-card">
+      <div>
+        <h3>Vanilla Bodycare</h3>
+        <p>After-shower lotion, soft scent and one repeatable bodycare angle that works well for Pinterest boards.</p>
+      </div>
+      <a href="#trending" data-filter-link="bodycare">See bodycare</a>
+    </div>
+    <div class="routine-card">
+      <div>
+        <h3>Before Makeup Skin Prep</h3>
+        <p>Hydration, eye patches, lip balm and glow base for a quick “skin first” makeup routine.</p>
+      </div>
+      <a href="#trending" data-filter-link="prep">See prep picks</a>
+    </div>
+    <div class="routine-card">
+      <div>
+        <h3>Travel Beauty Basics</h3>
+        <p>Clean towels, patches, lip care and compact products that make sense in a bag or weekend routine.</p>
+      </div>
+      <a href="#trending" data-filter-link="travel">See travel picks</a>
     </div>
   </div>
   <div class="social-row">
     <a class="social-pill" href="https://linktr.ee/EclatSkinAtelier" target="_blank" rel="noopener">Linktree</a>
     <a class="social-pill" href="https://www.instagram.com/eclat_skin_atelier/" target="_blank" rel="noopener">Instagram</a>
     <a class="social-pill" href="https://www.pinterest.com/ElatSkinAtelier/" target="_blank" rel="noopener">Pinterest</a>
+  </div>
+</section>
+
+<!-- WEEKLY EDIT -->
+<section class="edit-section" id="weekly-edit">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">My Weekly Beauty Edit</p>
+      <h2>Five Picks To Build The Weekend Around</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="edit-grid">
+    <article class="edit-card">
+      <small>The serum pick</small>
+      <h3>The Ordinary Niacinamide</h3>
+      <p>A simple oil-control serum lane for beginner acne content and routine education.</p>
+      <a href="#trending" data-filter-link="serum">Shop serums</a>
+    </article>
+    <article class="edit-card">
+      <small>The barrier pick</small>
+      <h3>Aquaphor Healing Ointment</h3>
+      <p>A repeatable dry-lip and dry-patch product with strong save potential.</p>
+      <a href="#trending" data-filter-link="bodycare">Shop barrier basics</a>
+    </article>
+    <article class="edit-card">
+      <small>The moisturizer pick</small>
+      <h3>CeraVe Daily Moisturizing Lotion</h3>
+      <p>A calm ceramide moisturizer for face, body and beginner routine content.</p>
+      <a href="#trending" data-filter-link="bodycare">Shop bodycare</a>
+    </article>
+    <article class="edit-card">
+      <small>The lip-care pick</small>
+      <h3>LANEIGE Bouncy & Firm Lip Treatment</h3>
+      <p>A glossy K-beauty lip treatment for texture videos and bag-essential pins.</p>
+      <a href="#trending" data-filter-link="k-beauty">Shop K-beauty</a>
+    </article>
+    <article class="edit-card">
+      <small>The SPF pick</small>
+      <h3>Neutrogena Purescreen+ Mineral UV Tint</h3>
+      <p>A tinted mineral sunscreen angle for makeup layering and summer shade checks.</p>
+      <a href="#trending" data-filter-link="spf">Shop SPF</a>
+    </article>
   </div>
 </section>
 
@@ -1186,16 +1745,16 @@
     <a href="#trending" class="catalog-card" data-filter-link="k-beauty">
       <div>
         <strong>K-Beauty Hydration</strong>
-        <span>Medicube, Biodance and Laneige style routines for glass-skin content.</span>
+        <span>Medicube, Biodance and LANEIGE routines for glass-skin and lip-care content.</span>
       </div>
-      <small>3 picks</small>
+      <small>4 picks</small>
     </a>
     <a href="#trending" class="catalog-card" data-filter-link="acne">
       <div>
         <strong>Acne Care Basics</strong>
-        <span>Simple spot-care products before stronger actives or complicated routines.</span>
+        <span>Spot care, niacinamide and routine hygiene before stronger actives.</span>
       </div>
-      <small>1 pick</small>
+      <small>4 picks</small>
     </a>
     <a href="#trending" class="catalog-card" data-filter-link="makeup">
       <div>
@@ -1207,16 +1766,16 @@
     <a href="#trending" class="catalog-card" data-filter-link="bodycare">
       <div>
         <strong>Bodycare</strong>
-        <span>Summer lotion, vanilla scents and shower-routine products to add next.</span>
+        <span>Ceramide lotion, repair ointment, vanilla scents and shower-routine products.</span>
       </div>
-      <small>1 pick</small>
+      <small>4 picks</small>
     </a>
     <a href="#trending" class="catalog-card" data-filter-link="spf">
       <div>
         <strong>SPF + Summer Skin</strong>
         <span>Tinted SPF, reapplication and makeup-friendly sunscreen education.</span>
       </div>
-      <small>1 pick</small>
+      <small>2 picks</small>
     </a>
     <a href="#trending" class="catalog-card" data-filter-link="haircare">
       <div>
@@ -1228,12 +1787,134 @@
   </div>
 </section>
 
+<!-- SHOP BY CONCERN -->
+<section class="concern-section" id="concerns">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">Shop By Concern</p>
+      <h2>Pick The Lane That Sounds Like Your Skin</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="concern-grid">
+    <article class="concern-card">
+      <small>Acne-prone skin</small>
+      <h3>Start with basics</h3>
+      <p>Pimple patches, clean towels and lightweight moisturizer before adding stronger exfoliants.</p>
+    </article>
+    <article class="concern-card">
+      <small>Barrier repair</small>
+      <h3>Keep it calm</h3>
+      <p>Gentle cleansing, ceramides, hydration and SPF habits matter more than another aggressive active.</p>
+    </article>
+    <article class="concern-card">
+      <small>Dull skin</small>
+      <h3>Add glow carefully</h3>
+      <p>Use hydration, occasional exfoliation and a glow base without chasing overnight transformation.</p>
+    </article>
+    <article class="concern-card">
+      <small>Dry lips + body</small>
+      <h3>Repeatable comfort</h3>
+      <p>Lip balm, body lotion and after-shower routines are practical, visual and easy to repurchase.</p>
+    </article>
+  </div>
+</section>
+
+<!-- CELEBRITY INSPIRED -->
+<section class="celebrity-section" id="celebrity">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">Celebrity-Inspired Beauty</p>
+      <h2>Get The Vibe Without Claiming The Exact Routine</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="celebrity-grid">
+    <article class="celebrity-card">
+      <small>Glazed Skin</small>
+      <h3>Hailey Bieber-inspired hydration</h3>
+      <p>Dewy, hydrated, minimal and skin-first. Build it with a gentle cleanse, hydrating mask, lightweight cream, SPF and glossy lip care.</p>
+      <a href="#trending" data-filter-link="k-beauty">Shop glow alternatives</a>
+    </article>
+    <article class="celebrity-card">
+      <small>Soft Glam</small>
+      <h3>Sabrina Carpenter-inspired blush & glow</h3>
+      <p>Soft focus skin, lifted lashes, glossy lips and a bright cheek moment. Keep the page framed as inspired, not exact.</p>
+      <a href="#trending" data-filter-link="makeup">Shop soft glam</a>
+    </article>
+    <article class="celebrity-card">
+      <small>Quiet Luxury</small>
+      <h3>Sofia Richie-inspired minimal beauty</h3>
+      <p>Simple skin prep, polished SPF, neat lashes and bodycare that feels elevated without needing a luxury-only routine.</p>
+      <a href="#trending" data-filter-link="spf">Shop minimal prep</a>
+    </article>
+  </div>
+</section>
+
+<!-- PRODUCT COMPARISONS -->
+<section class="comparison-section" id="comparisons">
+  <div class="section-head">
+    <div>
+      <p class="section-eyebrow">Product Comparison Hub</p>
+      <h2>Guides To Turn Into SEO Posts Next</h2>
+    </div>
+    <div class="line"></div>
+  </div>
+  <div class="comparison-grid">
+    <article class="comparison-card">
+      <small>Acne care</small>
+      <h3>Hero Mighty Patch vs COSRX Pimple Patch</h3>
+      <p>Quick answer format: choose by patch size, skin concern, price and how visible you want it to be.</p>
+    </article>
+    <article class="comparison-card">
+      <small>Drugstore makeup</small>
+      <h3>Maybelline Sky High vs L'Oreal Telescopic</h3>
+      <p>A useful mascara comparison for length, brush type, price and beginner-friendly application.</p>
+    </article>
+    <article class="comparison-card">
+      <small>SPF</small>
+      <h3>EltaMD UV Clear vs La Roche-Posay SPF</h3>
+      <p>Compare tint, texture, makeup layering and who may prefer each sunscreen style.</p>
+    </article>
+    <article class="comparison-card">
+      <small>K-beauty masks</small>
+      <h3>Biodance Mask vs Mediheal Mask</h3>
+      <p>Best for a glass-skin night routine, event prep, price sensitivity and texture preference.</p>
+    </article>
+    <article class="comparison-card">
+      <small>Glow base</small>
+      <h3>e.l.f. Halo Glow vs L'Oreal Lumi Glotion</h3>
+      <p>Compare glow level, wear under makeup and which one is easier for a no-foundation routine.</p>
+    </article>
+    <article class="comparison-card">
+      <small>Bodycare</small>
+      <h3>eos Vanilla Cashmere vs Sol de Janeiro</h3>
+      <p>Affordable vanilla bodycare versus a more premium body-scent lane for gift guides and Pinterest.</p>
+    </article>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="leadmagnet-section" id="checklist">
+  <div class="leadmagnet-box">
+    <div>
+      <p class="section-eyebrow">Free Beauty Checklist</p>
+      <h3>Simple Beauty Routine Checklist</h3>
+      <p>Use this as the future email opt-in: a printable AM/PM routine tracker plus an Amazon beauty wishlist so shoppers can save before they buy.</p>
+    </div>
+    <div class="leadmagnet-actions">
+      <a class="btn-primary" href="#about">Get the checklist</a>
+      <a class="btn-secondary" href="#trending">Browse picks</a>
+    </div>
+  </div>
+</section>
+
 <!-- BLOG PREVIEW -->
 <section class="blog-section" id="blog">
   <div class="section-head">
     <div>
       <p class="section-eyebrow">Latest Guides</p>
-      <h2>Posts To Build Next</h2>
+      <h2>Beauty Guides To Publish First</h2>
     </div>
     <div class="line"></div>
   </div>
@@ -1241,10 +1922,10 @@
     <article class="featured-post">
       <div class="post-image" data-label="Night Routine"></div>
       <div class="post-content">
-        <p class="post-meta">Featured Post · Cleansing Balm</p>
-        <h3>How To Build A Simple Night Routine Around A Cleansing Balm</h3>
-        <p>Use your Elemis Reel as the seed for a full blog post: first cleanse, gentle second cleanse, moisturizer and what to avoid when skin feels dry or dull.</p>
-        <a class="post-link" href="#trending">Shop the featured pick</a>
+        <p class="post-meta">Priority Guide · Amazon Beauty</p>
+        <h3>Best Amazon Beauty Finds 2026 For Simple Routines</h3>
+        <p>A shoppable hub for the products worth building around first: acne basics, K-beauty hydration, SPF, under-$20 makeup, bodycare and routine hygiene.</p>
+        <a class="post-link" href="posts/best-amazon-beauty-finds-2026.html">Read guide</a>
       </div>
     </article>
     <div class="post-list">
@@ -1252,24 +1933,27 @@
         <div class="post-image" data-label="Acne"></div>
         <div class="post-content">
           <p class="post-meta">Next Post</p>
-          <h3>Acne Care Starter Kit Before Buying Too Many Actives</h3>
-          <p>Pimple patches, clean towels and gentle habits that are easy to film.</p>
+          <h3>Simple Skincare Routine For Beginners</h3>
+          <p>Cleanser, moisturizer, SPF and one realistic treatment lane before adding complicated steps.</p>
+          <a class="post-link" href="posts/simple-skincare-routine-for-beginners.html">Read guide</a>
         </div>
       </article>
       <article class="post-card">
         <div class="post-image" data-label="K-Beauty"></div>
         <div class="post-content">
           <p class="post-meta">Pinterest Post</p>
-          <h3>Glass Skin Night Routine With K-Beauty Amazon Finds</h3>
-          <p>Biodance, medicube and Laneige products grouped into one shoppable routine.</p>
+          <h3>Best K-Beauty Products On Amazon For Glass Skin</h3>
+          <p>Biodance, medicube and Laneige-style hydration grouped into one simple PM routine.</p>
+          <a class="post-link" href="#trending" data-filter-link="k-beauty">Shop K-beauty picks</a>
         </div>
       </article>
       <article class="post-card">
-        <div class="post-image" data-label="SPF"></div>
+        <div class="post-image" data-label="Under $20"></div>
         <div class="post-content">
           <p class="post-meta">Seasonal Post</p>
-          <h3>Summer SPF And Glow Makeup That Works In One AM Routine</h3>
-          <p>A practical content lane for warm-weather Instagram and Pinterest search.</p>
+          <h3>Best Beauty Products Under $20</h3>
+          <p>Drugstore makeup, bodycare, acne basics and practical routine upgrades with strong save potential.</p>
+          <a class="post-link" href="posts/beauty-under-20.html">Read guide</a>
         </div>
       </article>
     </div>
@@ -1282,8 +1966,8 @@
 
     <div class="section-head">
       <div>
-        <p class="section-eyebrow">May 2026 · Curated From Current Signals</p>
-        <h2>The Current Beauty Picks To Build Around</h2>
+        <p class="section-eyebrow">May 2026 · Tested, Researched & Saved</p>
+        <h2>Current Beauty Picks With Routine Notes</h2>
       </div>
       <div class="line"></div>
     </div>
@@ -1291,14 +1975,14 @@
     <div class="product-tools">
       <label for="product-search">Find a product</label>
       <input id="product-search" class="product-search" type="search" placeholder="Search by product, brand, category or routine">
-      <span class="result-count" id="result-count">13 picks shown</span>
+      <span class="result-count" id="result-count">18 picks shown</span>
     </div>
 
     <div class="products-grid">
 
       <!-- PRODUCT 1 -->
-      <article class="product-card" data-category="skincare cleanser uploaded">
-        <div class="product-img" data-catalog="cleanse">
+      <article class="product-card" data-category="skincare cleanser uploaded hydration night-routine beginner-friendly">
+        <div class="product-img" data-catalog="cleanse" data-official="true">
           <div class="rank-badge">1</div>
           <div class="trend-badge">Uploaded Reel</div>
           <div class="product-img-placeholder">
@@ -1312,7 +1996,7 @@
               <span class="product-tag">Skincare</span>
               <span class="product-tag">Hydration</span>
             </div>
-            <h3>Pro-Collagen Black Cherry Cleansing Balm</h3>
+            <h3>Pro-Collagen Cleansing Balm Makeup Remover</h3>
             <p class="product-brand">Elemis</p>
             <p class="product-desc">Your first uploaded Reel already has the right lane: a sensory cleansing balm with texture, scent and makeup-removal value. Keep the content angle honest: spa-like first cleanse, dry/dull skin comfort and a polished night-routine moment.</p>
             <div class="product-highlights">
@@ -1321,11 +2005,17 @@
               <span class="highlight-chip">Night Routine</span>
               <span class="highlight-chip">Makeup Removal</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>PM makeup removal, dry or dull-skin comfort, sensory routine content.</dd></div>
+              <div><dt>Use</dt><dd>PM first cleanse before a gentle second cleanse or moisturizer.</dd></div>
+              <div><dt>Content idea</dt><dd>A spa-like night cleanse before bed.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you prefer fragrance-free cleansing or dislike balm textures.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$18 – $24</span>
-              <a href="https://www.amazon.com/s?k=Elemis+Pro-Collagen+Black+Cherry+Cleansing+Balm&tag=luxeskinateli-20" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+              <a href="https://amzn.to/3Rod1qI" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
                 Shop on Amazon
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1336,8 +2026,8 @@
       </article>
 
       <!-- PRODUCT 2 -->
-      <article class="product-card" data-category="skincare k-beauty">
-        <div class="product-img" data-catalog="mask">
+      <article class="product-card" data-category="skincare k-beauty hydration mask glow">
+        <div class="product-img" data-catalog="mask" data-official="true">
           <div class="rank-badge">2</div>
           <div class="trend-badge">K-Beauty</div>
           <div class="product-img-placeholder">
@@ -1360,11 +2050,17 @@
               <span class="highlight-chip">Overnight</span>
               <span class="highlight-chip">4-pack</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Hydrating night routines, event prep and glass-skin Pinterest content.</dd></div>
+              <div><dt>Use</dt><dd>PM mask weekly, before photos or when the routine needs a slower step.</dd></div>
+              <div><dt>Content idea</dt><dd>Glass skin night routine without ten steps.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you want a fast two-minute routine or dislike sticky mask textures.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$22 – $28</span>
-              <a href="https://amzn.to/3OXTVX6" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+              <a href="https://amzn.to/49AN39J" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
                 Shop on Amazon
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1375,8 +2071,8 @@
       </article>
 
       <!-- PRODUCT 3 -->
-      <article class="product-card" data-category="skincare acne under-20">
-        <div class="product-img" data-catalog="acne">
+      <article class="product-card" data-category="skincare acne under-20 beginner-friendly spot-care">
+        <div class="product-img" data-catalog="acne" data-official="true">
           <div class="rank-badge">3</div>
           <div class="product-img-placeholder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1398,7 +2094,13 @@
               <span class="highlight-chip">Beginner Friendly</span>
               <span class="highlight-chip">Under $20</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Visible whiteheads, basic acne care and simple overnight spot-care content.</dd></div>
+              <div><dt>Use</dt><dd>PM after cleansing on clean, dry skin; follow the package directions.</dd></div>
+              <div><dt>Content idea</dt><dd>Acne basics before buying ten serums.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you expect it to fix deep cystic acne overnight.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$12 – $18</span>
@@ -1413,8 +2115,8 @@
       </article>
 
       <!-- PRODUCT 4 -->
-      <article class="product-card" data-category="makeup glow under-20">
-        <div class="product-img" data-catalog="glow">
+      <article class="product-card" data-category="makeup glow under-20 celebrity budget">
+        <div class="product-img" data-catalog="glow" data-official="true">
           <div class="rank-badge">4</div>
           <div class="trend-badge">Budget Pick</div>
           <div class="product-img-placeholder">
@@ -1438,7 +2140,13 @@
               <span class="highlight-chip">Budget Find</span>
               <span class="highlight-chip">Under $16</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Soft glow makeup, no-foundation days and affordable complexion content.</dd></div>
+              <div><dt>Use</dt><dd>AM before makeup, mixed with moisturizer or under light coverage.</dd></div>
+              <div><dt>Content idea</dt><dd>Drugstore glow base that looks more expensive.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you prefer a matte finish or dislike luminous skin products.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$14 – $16</span>
@@ -1453,8 +2161,8 @@
       </article>
 
       <!-- PRODUCT 5 -->
-      <article class="product-card" data-category="skincare serum under-20">
-        <div class="product-img" data-catalog="tone">
+      <article class="product-card" data-category="skincare serum under-20 exfoliant texture bodycare">
+        <div class="product-img" data-catalog="tone" data-official="true">
           <div class="rank-badge">5</div>
           <div class="product-img-placeholder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
@@ -1476,7 +2184,13 @@
               <span class="highlight-chip">Brightening</span>
               <span class="highlight-chip">Pore Refining</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Texture, dullness education and responsible exfoliation content.</dd></div>
+              <div><dt>Use</dt><dd>PM only, start 1-2 nights weekly and avoid stacking strong actives.</dd></div>
+              <div><dt>Content idea</dt><dd>How not to over-exfoliate your skin.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If your skin barrier is irritated, peeling or already using strong actives.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$10 – $12</span>
@@ -1491,8 +2205,8 @@
       </article>
 
       <!-- PRODUCT 6 -->
-      <article class="product-card" data-category="skincare k-beauty">
-        <div class="product-img" data-catalog="jelly">
+      <article class="product-card" data-category="skincare k-beauty hydration moisturizer glow">
+        <div class="product-img" data-catalog="jelly" data-official="true">
           <div class="rank-badge">6</div>
           <div class="trend-badge">K-Beauty</div>
           <div class="product-img-placeholder">
@@ -1515,7 +2229,13 @@
               <span class="highlight-chip">Glass Skin</span>
               <span class="highlight-chip">Lightweight</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Lightweight hydration, glass-skin finish and oily/combination skin content.</dd></div>
+              <div><dt>Use</dt><dd>PM moisturizer or AM if it layers comfortably under SPF.</dd></div>
+              <div><dt>Content idea</dt><dd>Bouncy K-beauty moisturizer for a simple night routine.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you dislike dewy finishes or your skin reacts easily to niacinamide.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">Premium</span>
@@ -1530,8 +2250,8 @@
       </article>
 
       <!-- PRODUCT 7 -->
-      <article class="product-card" data-category="makeup under-20">
-        <div class="product-img" data-catalog="lash">
+      <article class="product-card" data-category="makeup under-20 mascara celebrity soft-glam">
+        <div class="product-img" data-catalog="lash" data-official="true">
           <div class="rank-badge">7</div>
           <div class="product-img-placeholder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12c0-2.76 1.12-5.26 2.93-7.07"/></svg>
@@ -1553,7 +2273,13 @@
               <span class="highlight-chip">Lengthening</span>
               <span class="highlight-chip">Under $15</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Drugstore mascara, visible lift and before/after short-form content.</dd></div>
+              <div><dt>Use</dt><dd>AM makeup; film one coat versus two coats for comparison content.</dd></div>
+              <div><dt>Content idea</dt><dd>Amazon mascara under fifteen dollars before and after.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you want the most natural lash look or dislike lengthening formulas.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$12 – $15</span>
@@ -1568,8 +2294,8 @@
       </article>
 
       <!-- PRODUCT 8 -->
-      <article class="product-card" data-category="skincare cleanser under-20">
-        <div class="product-img" data-catalog="towel">
+      <article class="product-card" data-category="skincare cleanser under-20 hygiene barrier travel acne beginner-friendly">
+        <div class="product-img" data-catalog="towel" data-official="true">
           <div class="rank-badge">8</div>
           <div class="trend-badge">Routine Upgrade</div>
           <div class="product-img-placeholder">
@@ -1592,11 +2318,17 @@
               <span class="highlight-chip">Makeup Removal</span>
               <span class="highlight-chip">Under $20</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Routine hygiene, acne-prone routines, travel bags and makeup removal support.</dd></div>
+              <div><dt>Use</dt><dd>After cleansing to dry skin with a fresh towel instead of a reused cloth.</dd></div>
+              <div><dt>Content idea</dt><dd>The boring skincare upgrade that makes sense.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If disposable products do not fit your budget or sustainability preferences.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$12 – $18</span>
-              <a href="https://amzn.to/3N7Ktjo" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+              <a href="https://amzn.to/4unB2fV" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
                 Shop on Amazon
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1607,8 +2339,8 @@
       </article>
 
       <!-- PRODUCT 9 -->
-      <article class="product-card" data-category="skincare lip-care">
-        <div class="product-img" data-catalog="lips">
+      <article class="product-card" data-category="skincare lip-care makeup glow prep k-beauty">
+        <div class="product-img" data-catalog="lips" data-official="true">
           <div class="rank-badge">9</div>
           <div class="product-img-placeholder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -1630,7 +2362,13 @@
               <span class="highlight-chip">Glossy Finish</span>
               <span class="highlight-chip">Daily Essential</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Glossy lip care, desk essentials, bag content and skin prep before makeup.</dd></div>
+              <div><dt>Use</dt><dd>AM, PM or before lip color when you want a soft glossy finish.</dd></div>
+              <div><dt>Content idea</dt><dd>What I keep in my bag for easy lip care.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you prefer fragrance-free lip care or a completely matte lip.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$16 – $22</span>
@@ -1645,8 +2383,8 @@
       </article>
 
       <!-- PRODUCT 10 -->
-      <article class="product-card" data-category="skincare eye-care under-20">
-        <div class="product-img" data-catalog="eyes">
+      <article class="product-card" data-category="skincare eye-care under-20 makeup prep self-care">
+        <div class="product-img" data-catalog="eyes" data-official="true">
           <div class="rank-badge">10</div>
           <div class="trend-badge">Eye Care</div>
           <div class="product-img-placeholder">
@@ -1669,7 +2407,13 @@
               <span class="highlight-chip">Makeup Prep</span>
               <span class="highlight-chip">Under $20</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Before-makeup prep, tired-morning content and low-effort self-care posts.</dd></div>
+              <div><dt>Use</dt><dd>AM or before makeup when the eye area needs a cooling routine moment.</dd></div>
+              <div><dt>Content idea</dt><dd>Five-minute skin prep before soft glam.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If your eye area is easily irritated or you avoid retinol near the eyes.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$14 – $18</span>
@@ -1684,8 +2428,8 @@
       </article>
 
       <!-- PRODUCT 11 -->
-      <article class="product-card" data-category="bodycare under-20">
-        <div class="product-img" data-catalog="body">
+      <article class="product-card" data-category="bodycare under-20 vanilla routine">
+        <div class="product-img" data-catalog="body" data-official="true">
           <div class="rank-badge">11</div>
           <div class="trend-badge">Bodycare</div>
           <div class="product-img-placeholder">
@@ -1708,7 +2452,13 @@
               <span class="highlight-chip">After Shower</span>
               <span class="highlight-chip">Summer Routine</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Soft vanilla bodycare, after-shower routines and affordable scent content.</dd></div>
+              <div><dt>Use</dt><dd>After shower while skin is still slightly damp, then layer fragrance if desired.</dd></div>
+              <div><dt>Content idea</dt><dd>Vanilla bodycare that feels more expensive than it is.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you dislike sweet scents or want an unscented body lotion.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$9 – $14</span>
@@ -1723,8 +2473,8 @@
       </article>
 
       <!-- PRODUCT 12 -->
-      <article class="product-card" data-category="skincare spf">
-        <div class="product-img" data-catalog="spf">
+      <article class="product-card" data-category="skincare spf makeup summer prep sensitive">
+        <div class="product-img" data-catalog="laroche" data-official="true">
           <div class="rank-badge">12</div>
           <div class="trend-badge">Summer SPF</div>
           <div class="product-img-placeholder">
@@ -1738,20 +2488,26 @@
               <span class="product-tag">SPF</span>
               <span class="product-tag">Skincare</span>
             </div>
-            <h3>UV Clear Tinted SPF 46</h3>
-            <p class="product-brand">EltaMD</p>
-            <p class="product-desc">Use this lane for summer education: texture, tint, under-makeup wear and reapplication. Keep the review practical and avoid fear-based claims; SPF content should be useful and repeatable.</p>
+            <h3>Anthelios Sunscreen SPF 40</h3>
+            <p class="product-brand">La Roche-Posay</p>
+            <p class="product-desc">A fresh SPF pick for today's content. Use this lane for texture checks, under-makeup wear, summer reapplication and sensitive-skin friendly education. Keep the review practical and avoid fear-based sunscreen claims.</p>
             <div class="product-highlights">
-              <span class="highlight-chip">Tinted SPF</span>
+              <span class="highlight-chip">SPF 40</span>
               <span class="highlight-chip">Makeup Friendly</span>
               <span class="highlight-chip">Summer Routine</span>
               <span class="highlight-chip">AM Step</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Daily SPF content, summer routines and sunscreen that can sit under makeup.</dd></div>
+              <div><dt>Use</dt><dd>AM as the sunscreen step; reapply according to label directions.</dd></div>
+              <div><dt>Content idea</dt><dd>La Roche-Posay SPF texture check before makeup.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you already have an SPF you wear consistently or need a lower-budget sunscreen pick.</p>
+                    </div>
           <div>
             <div class="product-footer">
-              <span class="price-range">$35 – $45</span>
-              <a href="https://www.amazon.com/s?k=EltaMD+UV+Clear+Tinted+SPF+46&tag=luxeskinateli-20" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+              <span class="price-range">Premium SPF</span>
+              <a href="https://amzn.to/3RrZSg6" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
                 Shop on Amazon
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1762,8 +2518,8 @@
       </article>
 
       <!-- PRODUCT 13 -->
-      <article class="product-card" data-category="haircare under-20">
-        <div class="product-img" data-catalog="scalp">
+      <article class="product-card" data-category="haircare under-20 scalp routine-basics">
+        <div class="product-img" data-catalog="scalp" data-official="true">
           <div class="rank-badge">13</div>
           <div class="trend-badge">Scalp Care</div>
           <div class="product-img-placeholder">
@@ -1786,11 +2542,242 @@
               <span class="highlight-chip">Routine Basics</span>
               <span class="highlight-chip">Under $20</span>
             </div>
-          </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Scalp-care basics, haircare education and bridge content from skincare to scalp.</dd></div>
+              <div><dt>Use</dt><dd>Use as directed on the label; keep claims practical and routine-focused.</dd></div>
+              <div><dt>Content idea</dt><dd>Scalp care basics before buying more hair products.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If scalp concerns are persistent, painful or worsening; ask a professional.</p>
+                    </div>
           <div>
             <div class="product-footer">
               <span class="price-range">$14 – $18</span>
               <a href="https://www.amazon.com/s?k=Nizoral+Anti-Dandruff+Shampoo&tag=luxeskinateli-20" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+                Shop on Amazon
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="affiliate-notice">Affiliate link: I may earn from qualifying purchases at no extra cost to you.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCT 14 -->
+      <article class="product-card" data-category="skincare serum acne under-20 beginner-friendly oil-control active uploaded weekend-edit">
+        <div class="product-img" data-catalog="niacinamide" data-official="true">
+          <div class="rank-badge">14</div>
+          <div class="trend-badge">Uploaded Today</div>
+          <div class="product-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M7 7h10M7 12h10M7 17h10"/></svg>
+            <span>Official Product Image</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <div>
+            <div class="product-meta">
+              <span class="product-tag">Serum</span>
+              <span class="product-tag">Acne Basics</span>
+            </div>
+            <h3>Niacinamide 10% + Zinc 1%</h3>
+            <p class="product-brand">The Ordinary</p>
+            <p class="product-desc">A beginner-friendly serum for oil-control and acne-basics content. Best angle: where niacinamide fits in a simple routine, how not to stack too many actives, and why consistency matters more than adding five serums at once.</p>
+            <div class="product-highlights">
+              <span class="highlight-chip">Niacinamide</span>
+              <span class="highlight-chip">Zinc PCA</span>
+              <span class="highlight-chip">Under $15</span>
+              <span class="highlight-chip">Beginner Serum</span>
+            </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Oily-looking skin, beginner serum education and acne-basics posts.</dd></div>
+              <div><dt>Use</dt><dd>AM or PM after cleansing and before moisturizer; patch test and avoid over-layering actives.</dd></div>
+              <div><dt>Content idea</dt><dd>Niacinamide for beginners before buying more serums.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If your skin is irritated, peeling or already reacting to active ingredients.</p>
+          </div>
+          <div>
+            <div class="product-footer">
+              <span class="price-range">$6 - $12</span>
+              <a href="https://amzn.to/4dZTCVF" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+                Shop on Amazon
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="affiliate-notice">Affiliate link: I may earn from qualifying purchases at no extra cost to you.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCT 15 -->
+      <article class="product-card" data-category="skincare bodycare lip-care barrier dry-skin under-20 slugging uploaded beginner-friendly weekend-edit">
+        <div class="product-img" data-catalog="aquaphor" data-official="true">
+          <div class="rank-badge">15</div>
+          <div class="trend-badge">Barrier Pick</div>
+          <div class="product-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c3 3 6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 3-8 6-11z"/></svg>
+            <span>Official Product Image</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <div>
+            <div class="product-meta">
+              <span class="product-tag">Barrier Care</span>
+              <span class="product-tag">Lip/Body</span>
+            </div>
+            <h3>Healing Ointment</h3>
+            <p class="product-brand">Aquaphor</p>
+            <p class="product-desc">A practical repair ointment for dry lips, dry patches, elbows, hands and simple slugging education. It is a strong repeat-buy product because the use case is clear and easy to show in pins.</p>
+            <div class="product-highlights">
+              <span class="highlight-chip">Dry Lips</span>
+              <span class="highlight-chip">Dry Patches</span>
+              <span class="highlight-chip">Slugging</span>
+              <span class="highlight-chip">Repeat Buy</span>
+            </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Dry lips, rough patches, after-shower bodycare and barrier-support content.</dd></div>
+              <div><dt>Use</dt><dd>Apply a thin layer over moisturizer on dry areas; avoid using on irritated acne without care.</dd></div>
+              <div><dt>Content idea</dt><dd>Three places I use a repair ointment in a simple routine.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you dislike occlusive textures or need a lighter daytime product.</p>
+          </div>
+          <div>
+            <div class="product-footer">
+              <span class="price-range">$6 - $18</span>
+              <a href="https://amzn.to/4a5EgfT" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+                Shop on Amazon
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="affiliate-notice">Affiliate link: I may earn from qualifying purchases at no extra cost to you.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCT 16 -->
+      <article class="product-card" data-category="skincare moisturizer bodycare barrier beginner-friendly ceramides dry-skin uploaded weekend-edit">
+        <div class="product-img" data-catalog="cerave" data-official="true">
+          <div class="rank-badge">16</div>
+          <div class="trend-badge">Moisturizer</div>
+          <div class="product-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+            <span>Official Product Image</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <div>
+            <div class="product-meta">
+              <span class="product-tag">Moisturizer</span>
+              <span class="product-tag">Barrier Care</span>
+            </div>
+            <h3>Daily Moisturizing Lotion</h3>
+            <p class="product-brand">CeraVe</p>
+            <p class="product-desc">A straightforward moisturizer for beginner routines, dry-skin comfort and face/body basics. Pair it with Aquaphor content when the story is barrier support: moisturizer first, ointment only where needed.</p>
+            <div class="product-highlights">
+              <span class="highlight-chip">Ceramides</span>
+              <span class="highlight-chip">Daily Moisturizer</span>
+              <span class="highlight-chip">Face & Body</span>
+              <span class="highlight-chip">Beginner Friendly</span>
+            </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Simple moisturizer education, dry skin and face/body routine content.</dd></div>
+              <div><dt>Use</dt><dd>AM or PM after cleansing; layer SPF over it during the day.</dd></div>
+              <div><dt>Content idea</dt><dd>The boring moisturizer step that makes the rest of the routine easier.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you prefer richer creams or need a very matte finish.</p>
+          </div>
+          <div>
+            <div class="product-footer">
+              <span class="price-range">$12 - $18</span>
+              <a href="https://amzn.to/49NiX2C" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+                Shop on Amazon
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="affiliate-notice">Affiliate link: I may earn from qualifying purchases at no extra cost to you.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCT 17 -->
+      <article class="product-card" data-category="skincare lip-care k-beauty hydration glow makeup prep uploaded weekend-edit">
+        <div class="product-img" data-catalog="laneige-bouncy" data-official="true">
+          <div class="rank-badge">17</div>
+          <div class="trend-badge">Lip Care</div>
+          <div class="product-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Official Product Image</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <div>
+            <div class="product-meta">
+              <span class="product-tag">Lip Care</span>
+              <span class="product-tag">K-Beauty</span>
+            </div>
+            <h3>Bouncy & Firm Lip Treatment</h3>
+            <p class="product-brand">LANEIGE</p>
+            <p class="product-desc">A more premium lip-care pick for glossy texture, bag essentials and K-beauty hydration content. Strong for close-up Reels because the packaging, texture and finish are all easy to show.</p>
+            <div class="product-highlights">
+              <span class="highlight-chip">Glossy Texture</span>
+              <span class="highlight-chip">Lip Treatment</span>
+              <span class="highlight-chip">K-Beauty</span>
+              <span class="highlight-chip">Bag Essential</span>
+            </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>Lip-care videos, bag essentials, desk essentials and makeup prep.</dd></div>
+              <div><dt>Use</dt><dd>AM, PM or before lip color when you want a glossy cushiony finish.</dd></div>
+              <div><dt>Content idea</dt><dd>Is this lip treatment worth the premium spot in the bag?</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If you want the lowest-cost lip balm or prefer completely fragrance-free lip care.</p>
+          </div>
+          <div>
+            <div class="product-footer">
+              <span class="price-range">$24 - $28</span>
+              <a href="https://amzn.to/49ZGpcX" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
+                Shop on Amazon
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="affiliate-notice">Affiliate link: I may earn from qualifying purchases at no extra cost to you.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- PRODUCT 18 -->
+      <article class="product-card" data-category="skincare spf makeup summer prep sensitive tinted-sunscreen uploaded beginner-friendly weekend-edit">
+        <div class="product-img" data-catalog="neutrogena-tint" data-official="true">
+          <div class="rank-badge">18</div>
+          <div class="trend-badge">Tinted SPF</div>
+          <div class="product-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            <span>Official Product Image</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <div>
+            <div class="product-meta">
+              <span class="product-tag">SPF</span>
+              <span class="product-tag">Tinted Sunscreen</span>
+            </div>
+            <h3>Purescreen+ Mineral UV Tint</h3>
+            <p class="product-brand">Neutrogena</p>
+            <p class="product-desc">A tinted mineral SPF for summer routine content, shade checks and under-makeup testing. It pairs well with La Roche-Posay as a comparison lane: premium SPF versus drugstore SPF tint.</p>
+            <div class="product-highlights">
+              <span class="highlight-chip">Mineral SPF</span>
+              <span class="highlight-chip">Tinted Finish</span>
+              <span class="highlight-chip">Makeup Friendly</span>
+              <span class="highlight-chip">Summer Routine</span>
+            </div>
+            <dl class="product-quick">
+              <div><dt>Best for</dt><dd>SPF texture checks, makeup layering, shade content and summer skincare posts.</dd></div>
+              <div><dt>Use</dt><dd>AM sunscreen step; apply and reapply according to label directions.</dd></div>
+              <div><dt>Content idea</dt><dd>Drugstore SPF tint before makeup: texture and finish check.</dd></div>
+            </dl>
+            <p class="skip-note"><strong>Who should skip it:</strong> If the tint range does not match your skin tone or you prefer invisible sunscreen.</p>
+          </div>
+          <div>
+            <div class="product-footer">
+              <span class="price-range">$13 - $18</span>
+              <a href="https://amzn.to/4uoa5sB" class="affiliate-btn" target="_blank" rel="nofollow sponsored noopener">
                 Shop on Amazon
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1809,8 +2796,8 @@
     <div class="sidebar-widget about-widget" id="about">
       <div class="about-accent"></div>
       <h3 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--rose-dark);margin-bottom:14px;">Behind the Blog</h3>
-      <p>ÉclatSkinAtelier is a bilingual beauty curation project focused on simple routines, Amazon US finds, and trend-aware product guides for skincare beginners.</p>
-      <p style="margin-bottom:0;">The goal is practical: make every TikTok, Reel and Pin lead to one useful routine page instead of a random list of links.</p>
+      <p>ÉclatSkinAtelier is a beauty curation project for simple routines, Amazon US finds, K-beauty, soft glam makeup and beginner-friendly skincare.</p>
+      <p style="margin-bottom:0;">I want every Reel, Pin and product link to answer the same question: where does this actually fit in a real routine?</p>
     </div>
 
     <div class="sidebar-widget">
@@ -1841,7 +2828,7 @@
 
     <div class="sidebar-widget newsletter-widget">
       <h3 class="widget-title">Get Weekly Picks</h3>
-      <p>Use this as the future email capture for weekly Amazon beauty picks, sale alerts and routine guides.</p>
+      <p>Get the free Simple Beauty Routine Checklist and save your next Amazon beauty list before you buy.</p>
       <div class="newsletter-form">
         <input type="email" placeholder="your@email.com" aria-label="Email address">
         <button>Join the List</button>
@@ -1898,15 +2885,15 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <span class="logo-footer">ÉclatSkinAtelier</span>
-      <p>Curated skincare and beauty picks for simple Amazon US routines, short-form content and repeatable shopping guides.</p>
+      <p>A personal beauty recommendation hub for simple routines, Amazon beauty finds, celebrity-inspired looks and beginner-friendly guides.</p>
     </div>
     <div>
       <h4>Categories</h4>
       <ul>
+        <li><a href="#start">Start Here</a></li>
         <li><a href="#trending">Skincare</a></li>
         <li><a href="#trending">Makeup</a></li>
-        <li><a href="#trending">Cleansers & Toners</a></li>
-        <li><a href="#trending">Serums & Treatments</a></li>
+        <li><a href="#weekly-edit">My Weekly Beauty Edit</a></li>
         <li><a href="#routines">Routine Guides</a></li>
         <li><a href="#trending">K-Beauty Picks</a></li>
         <li><a href="#trending">Budget Finds</a></li>
@@ -1917,7 +2904,9 @@
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#routines">Skincare Routines</a></li>
-        <li><a href="#ingredients">Ingredient Guide</a></li>
+        <li><a href="#celebrity">Celebrity-Inspired Beauty</a></li>
+        <li><a href="#comparisons">Product Comparisons</a></li>
+        <li><a href="#checklist">Free Checklist</a></li>
         <li><a href="https://www.pinterest.com/ElatSkinAtelier/" target="_blank" rel="noopener">Pinterest</a></li>
         <li><a href="https://www.instagram.com/eclat_skin_atelier/" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://linktr.ee/EclatSkinAtelier" target="_blank" rel="noopener">Linktree</a></li>
@@ -1930,7 +2919,27 @@
   </div>
 </footer>
 
+<a class="mobile-bottom-cta" href="#start">
+  <span>Start Here</span>
+  <span>Shop the edit</span>
+</a>
+
 <script>
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+  const siteNav = document.getElementById('site-nav');
+  if (mobileMenuBtn && siteNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = siteNav.classList.toggle('open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    siteNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        siteNav.classList.remove('open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
   function applyProductFilter(filter) {
     const searchInput = document.getElementById('product-search');
     const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
@@ -1959,6 +2968,7 @@
       e.preventDefault();
       const filter = this.dataset.filter || 'all';
       applyProductFilter(filter);
+      document.getElementById('trending')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -1966,7 +2976,9 @@
     link.addEventListener('click', function(e) {
       const filter = this.dataset.filterLink;
       if (!filter) return;
+      e.preventDefault();
       applyProductFilter(filter);
+      document.getElementById('trending')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 

@@ -17,7 +17,7 @@ Enfoque: productos con señales de rutina, recompra, busqueda visual o temporada
 | The Ordinary Glycolic Acid 7% | Exfoliant | #8 en Top 25; educa sobre uso responsable | Reel: "How not to over-exfoliate" |
 | Clean Skin Club Clean Towels XL | Routine hygiene | #9 en Top 25; buen producto para habitos | Reel: "One tiny routine upgrade" |
 | Nizoral Anti-Dandruff Shampoo | Hair/scalp | #10 en Top 25; scalp care es puente con skincare | Pin: "Scalp care basics" |
-| EltaMD UV Clear Tinted SPF 46 | Sunscreen | Regreso de sunscreen al Top 25 y temporada verano | Reel: "Tinted SPF for summer routine" |
+| La Roche-Posay Anthelios Sunscreen SPF 40 | Sunscreen | SPF de temporada para textura, maquillaje y reapplication hooks | Reel: "SPF texture check before makeup" |
 
 ## Prioridad B: llenar categorias del blog
 

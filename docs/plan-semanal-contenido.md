@@ -48,7 +48,7 @@ Blog: categoria bodycare.
 
 ## Viernes: SPF / temporada
 
-Producto: EltaMD UV Clear Tinted SPF 46 o alternativa SPF Amazon disponible  
+Producto: La Roche-Posay Anthelios Sunscreen SPF 40  
 Angle: "SPF que no arruina el makeup."  
 Reel: textura, acabado, reapplication talk.  
 Pinterest: "summer skincare SPF routine".  

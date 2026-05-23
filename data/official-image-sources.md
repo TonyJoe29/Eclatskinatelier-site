@@ -1,0 +1,26 @@
+# Official Image Sources
+
+The homepage uses remote official brand images for active products, with local SVG editorial art as fallback.
+
+Important: for Amazon affiliate compliance, the safest production path is still Amazon SiteStripe or Product Advertising API image markup where available. These brand image URLs are useful for visual drafting and should be replaced if your affiliate program requires a different source.
+
+| Product | Official product page | Image source used |
+|---|---|---|
+| Biodance Bio-Collagen Real Deep Mask | https://biodance.com/products/biodance-bio-collagen-real-deep-mask | `https://biodance.com/cdn/shop/files/2510_4_388c8df8-fc8d-45eb-af91-a9d884fad801.jpg?v=1761116311&width=1200` |
+| ELEMIS Pro-Collagen Cleansing Balm | https://elemis.com/eu/product/pro-collagen-cleansing-balm?bottle_size=303 | `https://assets.elemis.com/image/upload/w_900,c_fill,g_auto,q_100,f_auto/assets/asset/57169121-7cd5-4100-849a-633639b404d2/60087_Pro-Collagen-Cleansing-Balm_100g_LID-ON_ROW.png` |
+| Clean Skin Club Clean Towels XL | https://cleanskinclub.com/products/clean-towels | `https://cleanskinclub.com/cdn/shop/files/FINAL_CTXL_1_1024x1024.jpg?v=1762200602` |
+| La Roche-Posay Anthelios SPF 40 | https://www.laroche-posay.us/our-products/sunscreen/tinted-sunscreen/anthelios-mineral-tinted-sunscreen-for-face-with-spf-883140020899.html | `https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg?q=80&sfrm=jpg&sh=900&sm=cut&sw=900` |
+| The Ordinary Niacinamide 10% + Zinc 1% | https://theordinary.com/en-us/niacinamide-10-zinc-1-serum-100436.html | `https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dwce8a7cdf/Images/products/The%20Ordinary/rdn-niacinamide-10pct-zinc-1pct-30ml.png?sw=900&sh=900&sm=fit` |
+| Aquaphor Healing Ointment | https://www.aquaphorus.com/products/aquaphor-repairing-ointment/aquaphor-healing-ointment-14oz | `https://images-1.eucerin.com/~/media/eucerin%20relaunch%20media/media-center-items/c/5/b/5d8bbc31f7d44dd0963c288b416d300d-screen.jpg?db=web&hash=6405a1adcac9555f76a3d72fe78e05ba` |
+| CeraVe Daily Moisturizing Lotion | https://www.cerave.com/en-us/skincare/moisturizers/daily-moisturizing-lotion | `https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/products-v3/daily-moisturizing-lotion/700x700/cerave_daily_moisturizing_lotion_12oz_front_-700x700-v2.jpg?rev=5fb61e1db7fe49fb9faf308c5f583d65` |
+| LANEIGE Bouncy & Firm Lip Treatment | https://us.laneige.com/products/bouncy-firm-lip-treatment | `https://us.laneige.com/cdn/shop/files/B0D84WSNQK.MAIN.jpg?v=1722537722` |
+| Neutrogena Purescreen+ Mineral UV Tint | https://www.neutrogena.com/products/neutrogena-purescreen-mineral-uv-tint-face-liquid-sunscreen/6806411 | `https://images.ctfassets.net/bcjr30vxh6td/5E7AnnVFu20EME9N78rmqA/7e0c6d6ba27b6927bc336503c0cc6055/NTG_086800064114_US_Purescreen_Face_SPF30_Light_1.1OZ_00000.webp?fm=webp&w=1024` |
+| Hero Mighty Patch Original | https://www.herocosmetics.us/products/mighty-patch-original | `https://cdn.accentuate.io/11723218878506/1621370114488/Product-Thumbnail---MPO.png?v=1681752719090` |
+| e.l.f. Halo Glow Liquid Filter | https://www.elfcosmetics.com/halo-glow-liquid-filter/300211.html | `https://www.elfcosmetics.com/dw/image/v2/BBXC_PRD/on/demandware.static/-/Sites-elf-master/default/dw2aabd9eb/2022/HaloGlowLiquidFilter/82113_Halo_Glow_Liquid_Filter_Fair/82113_OpenA_R.png?sw=700` |
+| The Ordinary Glycolic Acid 7% Exfoliating Toner | https://theordinary.com/en-us/glycolic-acid-7-exfoliating-toner-100418.html | `https://theordinary.com/dw/image/v2/BFKJ_PRD/on/demandware.static/-/Sites-deciem-master/default/dw8b57fa2b/Images/products/The%20Ordinary/ord-glyc-acid-7pct-100ml-Aug-UPC.png?sw=900&sh=900&sm=fit` |
+| medicube Collagen Niacinamide Jelly Cream | https://medicube.us/products/collagen-niacinamide-jelly-cream | `https://medicube.us/cdn/shop/files/jelly50ml_th2_1.jpg?v=1766563329` |
+| Maybelline Lash Sensational Sky High Mascara | https://www.maybelline.com/eye-makeup/mascara/lash-sensational-sky-high-washable-mascara-makeup | `https://www.maybelline.com/-/media/project/loreal/brand-sites/mny/americas/us/eye-makeup/mascara/lash-sensational-sky-high-washable-mascara-makeup/update-march-2026/navy-records/update/maybelline-lash-sensational-sky-high-pdp-785-navyrecords-41554103267-packshot-(1).jpg?rev=180e1b4b8f79440a945132eba411a43f` |
+| LANEIGE Lip Glowy Balm | https://us.laneige.com/products/lip-glowy-balm | `https://us.laneige.com/cdn/shop/files/2_4_a868073f-eec2-4ad6-9f6e-0bdc24ebfb3c.jpg?v=1773238978` |
+| grace & stella Feel Good Under Eye Masks | https://www.graceandstella.com/products/feel-good-under-eye-masks | `https://www.graceandstella.com/cdn/shop/files/under-eye-masks-for-puffy-eyes-7837933.jpg?v=1768876042` |
+| eos Shea Better Body Lotion Vanilla Cashmere | https://evolutionofsmooth.com/products/shea-better-body-lotion-vanilla-cashmere | `https://evolutionofsmooth.com/cdn/shop/files/VanillaCashmereBL_2.jpg?v=1758024162` |
+| Nizoral Anti-Dandruff Shampoo | https://nizoral.com/ | `https://nizoral.com/wp-content/uploads/2024/02/NIZ_Carton_7oz_21902_051822_OT_2.png` |
