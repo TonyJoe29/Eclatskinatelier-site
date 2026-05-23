@@ -6,7 +6,7 @@ Date checked: 2026-05-23
 
 - Local branch: `main`
 - Remote branch: `origin/main`
-- Remote URL found locally: `https://github.com/TonyJoe29/eclatskinatelier-site.git`
+- Remote URL found locally: `https://github.com/TonyJoe29/Eclatskinatelier-site.git`
 - Current local changes are not pushed yet.
 - GitHub App access did not resolve this repository, so launch should be confirmed from GitHub web settings after push.
 
@@ -14,7 +14,7 @@ Date checked: 2026-05-23
 
 The site is close enough to launch as a first public version after committing and pushing the current content update. With the renamed repository, the likely GitHub Pages URL will be:
 
-`https://tonyjoe29.github.io/eclatskinatelier-site/`
+`https://tonyjoe29.github.io/Eclatskinatelier-site/`
 
 ## Launch steps
 
