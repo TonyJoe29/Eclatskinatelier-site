@@ -11,7 +11,7 @@ Cloudflare Workers is a better free fit than a Render background worker because 
 3. Stores pending offers in Workers KV.
 4. Sends you a private preview with `Aprobar` / `Rechazar`.
 5. Publishes approved offers to `TELEGRAM_GROUP_CHAT_ID`.
-6. Runs a scheduled offer scanner every 30 minutes when a compliant feed is configured.
+6. Can run a scheduled offer scanner every 30 minutes once a compliant feed is configured.
 
 ## Setup
 
@@ -52,7 +52,7 @@ TELEGRAM_BOT_TOKEN=
 TELEGRAM_ADMIN_CHAT_ID=
 TELEGRAM_GROUP_CHAT_ID=
 TELEGRAM_WEBHOOK_SECRET=
-SCAN_ENABLED=true
+SCAN_ENABLED=false
 MAX_SCAN_CANDIDATES=5
 DEAL_FEED_URL=
 DEAL_FEED_BEARER_TOKEN=
@@ -69,6 +69,8 @@ The scanner is wired for Cloudflare Cron Triggers and can also be run manually f
 ```
 
 Use `/scan 10` to process up to 10 candidates in one run. The Worker deduplicates scanned candidates for 7 days, stores valid candidates as pending offers, and sends the admin a private preview with approval buttons. The group still only receives approved offers.
+
+Keep `SCAN_ENABLED=false` while no `DEAL_FEED_URL` is configured. Manual offers continue to work with `/offer`; scheduled scans can be enabled after Amazon Creators API or another compliant feed is ready.
 
 The scanner expects a compliant source such as Amazon Creators API/Product Advertising API or your own normalized deal feed. It does not scrape Amazon pages.
 
