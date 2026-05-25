@@ -75,7 +75,7 @@ npm run deploy
 Wrangler will print a URL like:
 
 ```text
-https://eclatskinatelier-telegram-bot.<your-subdomain>.workers.dev
+https://eclatskinatelier-telegram-bot.eclatskinatelier.workers.dev
 ```
 
 Register Telegram webhook:
@@ -91,7 +91,7 @@ On PowerShell, use:
 ```powershell
 $token = "TELEGRAM_BOT_TOKEN"
 $secret = "TELEGRAM_WEBHOOK_SECRET"
-$url = "https://eclatskinatelier-telegram-bot.<your-subdomain>.workers.dev/telegram/webhook"
+$url = "https://eclatskinatelier-telegram-bot.eclatskinatelier.workers.dev/telegram/webhook"
 Invoke-RestMethod -Method Post -Uri "https://api.telegram.org/bot$token/setWebhook" -ContentType "application/json" -Body (@{
   url = $url
   secret_token = $secret
@@ -110,7 +110,7 @@ Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^node(\\.exe)?$' 
 Open:
 
 ```text
-https://eclatskinatelier-telegram-bot.<your-subdomain>.workers.dev/
+https://eclatskinatelier-telegram-bot.eclatskinatelier.workers.dev/
 ```
 
 Expected response:

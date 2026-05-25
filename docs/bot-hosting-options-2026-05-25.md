@@ -50,3 +50,4 @@ The Cloudflare Worker project now lives in `cloudflare-bot/`.
 - Config: `cloudflare-bot/wrangler.toml`
 - Local secrets example: `cloudflare-bot/.dev.vars.example`
 - Deploy guide: `cloudflare-bot/README.md`
+- Live Worker URL: `https://eclatskinatelier-telegram-bot.eclatskinatelier.workers.dev`
