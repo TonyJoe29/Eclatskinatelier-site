@@ -9,3 +9,5 @@ node_modules/
 videos/
 telegram-bot/data/*.json
 !telegram-bot/data/.gitkeep
+cloudflare-bot/.dev.vars
+cloudflare-bot/.wrangler/

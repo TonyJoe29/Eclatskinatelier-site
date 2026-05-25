@@ -1,0 +1,16 @@
+{
+  "name": "eclatskinatelier-cloudflare-telegram-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Workers webhook version of the EclatSkinAtelier Telegram approvals bot.",
+  "scripts": {
+    "check": "node --check src/worker.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "kv:create": "wrangler kv namespace create OFFERS_KV"
+  },
+  "devDependencies": {
+    "wrangler": "^4.18.0"
+  }
+}
