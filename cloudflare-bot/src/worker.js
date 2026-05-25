@@ -9,28 +9,49 @@ const FIELD_ALIASES = new Map([
   ['url', 'url'],
   ['link', 'url'],
   ['enlace', 'url'],
+  ['affiliateurl', 'url'],
+  ['detailpageurl', 'url'],
   ['before', 'before'],
   ['antes', 'before'],
   ['was', 'before'],
   ['list', 'before'],
+  ['beforeprice', 'before'],
+  ['wasprice', 'before'],
+  ['listprice', 'before'],
+  ['originalprice', 'before'],
   ['after', 'after'],
   ['despues', 'after'],
   ['ahora', 'after'],
   ['now', 'after'],
   ['price', 'after'],
+  ['afterprice', 'after'],
+  ['saleprice', 'after'],
+  ['currentprice', 'after'],
+  ['dealprice', 'after'],
   ['rating', 'rating'],
   ['calificacion', 'rating'],
+  ['customerrating', 'rating'],
+  ['averagerating', 'rating'],
+  ['stars', 'rating'],
   ['reviews', 'reviews'],
   ['reviewers', 'reviews'],
   ['resenas', 'reviews'],
+  ['reviewcount', 'reviews'],
+  ['reviewercount', 'reviews'],
+  ['ratingscount', 'reviews'],
+  ['totalreviews', 'reviews'],
   ['reseñas', 'reviews'],
   ['category', 'category'],
   ['categoria', 'category'],
   ['nicho', 'category'],
+  ['department', 'category'],
+  ['productgroup', 'category'],
   ['image', 'image'],
   ['imagen', 'image'],
   ['photo', 'image'],
-  ['foto', 'image']
+  ['foto', 'image'],
+  ['imageurl', 'image'],
+  ['primaryimage', 'image']
 ]);
 
 const CATEGORY_ALIASES = new Map([
@@ -59,6 +80,11 @@ const MONEY_FORMATTER = new Intl.NumberFormat('en-US', {
   currency: 'USD'
 });
 
+const SCAN_STATE_KEY = 'scanner:last-run';
+const SCAN_DEDUP_TTL_SECONDS = 7 * 24 * 60 * 60;
+const DEFAULT_SCAN_LIMIT = 5;
+const MAX_SCAN_LIMIT = 20;
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -71,7 +97,15 @@ export default {
       return handleTelegramWebhook(request, env);
     }
 
+    if (request.method === 'POST' && url.pathname === '/scanner/run') {
+      return handleScannerRun(request, env);
+    }
+
     return json({ ok: false, error: 'Not found' }, 404);
+  },
+
+  async scheduled(controller, env, ctx) {
+    ctx.waitUntil(runScheduledScan(controller, env));
   }
 };
 
@@ -97,6 +131,37 @@ async function handleTelegramWebhook(request, env) {
   }
 
   return json({ ok: true });
+}
+
+async function handleScannerRun(request, env) {
+  const expectedSecret = env.TELEGRAM_WEBHOOK_SECRET || '';
+  const actualSecret = request.headers.get('X-Scanner-Secret') || '';
+
+  if (expectedSecret && actualSecret !== expectedSecret) {
+    return json({ ok: false, error: 'Unauthorized' }, 401);
+  }
+
+  const telegram = env.TELEGRAM_BOT_TOKEN ? new TelegramClient(env.TELEGRAM_BOT_TOKEN) : null;
+  const result = await runDealScan(env, telegram, { trigger: 'http' });
+  return json({ ok: result.status !== 'error', result });
+}
+
+async function runScheduledScan(controller, env) {
+  if (!isScannerEnabled(env)) {
+    return;
+  }
+
+  const telegram = env.TELEGRAM_BOT_TOKEN ? new TelegramClient(env.TELEGRAM_BOT_TOKEN) : null;
+
+  try {
+    await runDealScan(env, telegram, {
+      trigger: 'cron',
+      cron: controller.cron,
+      scheduledTime: new Date(controller.scheduledTime).toISOString()
+    });
+  } catch (error) {
+    console.error(`Scheduled scan failed: ${error.message}`);
+  }
 }
 
 async function handleMessage(message, env, telegram) {
@@ -153,6 +218,8 @@ async function handleMessage(message, env, telegram) {
 
   if (text.startsWith('/status')) {
     const counts = await countOffers(env);
+    const scannerConfig = getScannerConfig(env);
+    const scanStatus = await getScanStatus(env);
     await telegram.sendMessage({
       chat_id: chatId,
       text: [
@@ -161,11 +228,32 @@ async function handleMessage(message, env, telegram) {
         `Admin configurado: ${env.TELEGRAM_ADMIN_CHAT_ID ? 'si' : 'no'}`,
         `Grupo configurado: ${env.TELEGRAM_GROUP_CHAT_ID ? 'si' : 'no'}`,
         `Tag Amazon: ${getRules(env).amazonAssociateTag}`,
+        `Scanner programado: ${scannerConfig.enabled ? 'si' : 'no'}`,
+        `Fuente de ofertas: ${scannerConfig.feedUrl ? 'configurada' : 'pendiente'}`,
+        `Ultimo scan: ${formatLastScan(scanStatus)}`,
         `Ofertas totales: ${counts.total}`,
         `Pendientes: ${counts.pending || 0}`,
         `Publicadas: ${counts.published || 0}`,
         `Rechazadas: ${counts.rejected || 0}`
       ].join('\n')
+    });
+    return;
+  }
+
+  if (text.startsWith('/scan')) {
+    const limit = parseScanLimit(text);
+    const result = await runDealScan(env, telegram, {
+      trigger: 'manual',
+      requestedBy: userId,
+      replyChatId: chatId,
+      limit
+    });
+
+    await telegram.sendMessage({
+      chat_id: chatId,
+      text: formatScanSummary(result),
+      parse_mode: 'HTML',
+      disable_web_page_preview: true
     });
     return;
   }
@@ -358,6 +446,448 @@ function offerKey(id) {
   return `offer:${id}`;
 }
 
+async function runDealScan(env, telegram, options = {}) {
+  const config = getScannerConfig(env, options);
+  const result = {
+    status: 'ok',
+    trigger: options.trigger || 'manual',
+    startedAt: new Date().toISOString(),
+    sourceConfigured: Boolean(config.feedUrl),
+    checked: 0,
+    processed: 0,
+    queued: 0,
+    duplicates: 0,
+    invalid: 0,
+    notifyErrors: 0,
+    invalidExamples: [],
+    errors: []
+  };
+
+  if (!env.OFFERS_KV) {
+    return {
+      ...result,
+      status: 'error',
+      message: 'OFFERS_KV is not configured.'
+    };
+  }
+
+  if (!telegram) {
+    await saveScanStatus(env, {
+      ...result,
+      status: 'error',
+      message: 'TELEGRAM_BOT_TOKEN is not configured.',
+      completedAt: new Date().toISOString()
+    });
+    return {
+      ...result,
+      status: 'error',
+      message: 'TELEGRAM_BOT_TOKEN is not configured.'
+    };
+  }
+
+  if (!config.adminChatId) {
+    await saveScanStatus(env, {
+      ...result,
+      status: 'error',
+      message: 'TELEGRAM_ADMIN_CHAT_ID is not configured.',
+      completedAt: new Date().toISOString()
+    });
+    return {
+      ...result,
+      status: 'error',
+      message: 'TELEGRAM_ADMIN_CHAT_ID is not configured.'
+    };
+  }
+
+  if (!config.feedUrl) {
+    const missingSource = {
+      ...result,
+      status: 'missing_source',
+      message: 'Scanner is installed, but DEAL_FEED_URL is not configured yet.',
+      completedAt: new Date().toISOString()
+    };
+    await saveScanStatus(env, missingSource);
+    return missingSource;
+  }
+
+  let candidates;
+
+  try {
+    candidates = await fetchDealFeed(config);
+  } catch (error) {
+    const failed = {
+      ...result,
+      status: 'error',
+      message: `Deal feed failed: ${error.message}`,
+      completedAt: new Date().toISOString()
+    };
+    await saveScanStatus(env, failed);
+    return failed;
+  }
+
+  result.checked = candidates.length;
+
+  for (const candidate of candidates.slice(0, config.limit)) {
+    result.processed += 1;
+
+    const normalized = normalizeFeedCandidate(candidate);
+    const { offer, errors, warnings } = validateOfferFields(normalized.fields, getRules(env));
+
+    if (errors.length > 0) {
+      result.invalid += 1;
+
+      if (result.invalidExamples.length < 3) {
+        result.invalidExamples.push({
+          title: cleanText(normalized.fields.title || 'Untitled candidate'),
+          errors
+        });
+      }
+
+      continue;
+    }
+
+    const dedupKey = await buildScanDedupKey(offer);
+    const existingOfferId = await env.OFFERS_KV.get(dedupKey);
+
+    if (existingOfferId) {
+      result.duplicates += 1;
+      continue;
+    }
+
+    const sourceWarnings = normalized.sourceName
+      ? [`Scanned from ${normalized.sourceName}. Review price and availability before approval.`]
+      : ['Scanned candidate. Review price and availability before approval.'];
+
+    const savedOffer = await createOffer(env, {
+      ...offer,
+      warnings: [...warnings, ...sourceWarnings],
+      submittedBy: 'scanner',
+      scanSource: normalized.sourceName || config.feedLabel,
+      foundAt: normalized.foundAt
+    });
+
+    await env.OFFERS_KV.put(dedupKey, savedOffer.id, {
+      expirationTtl: SCAN_DEDUP_TTL_SECONDS
+    });
+
+    try {
+      await sendOfferReview(config.adminChatId, savedOffer, savedOffer.warnings, telegram);
+      result.queued += 1;
+    } catch (error) {
+      result.notifyErrors += 1;
+      result.errors.push(`Could not send preview for ${savedOffer.id}: ${error.message}`);
+    }
+  }
+
+  const completed = {
+    ...result,
+    completedAt: new Date().toISOString()
+  };
+  await saveScanStatus(env, completed);
+  return completed;
+}
+
+async function fetchDealFeed(config) {
+  const headers = {
+    accept: 'application/json'
+  };
+
+  if (config.feedBearerToken) {
+    headers.authorization = `Bearer ${config.feedBearerToken}`;
+  }
+
+  const response = await fetch(config.feedUrl, { headers });
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+
+  const payload = await response.json();
+  const candidates = extractCandidateArray(payload);
+
+  if (!Array.isArray(candidates)) {
+    throw new Error('Feed response must be an array or contain offers/items/deals/data.');
+  }
+
+  return candidates;
+}
+
+function extractCandidateArray(payload) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  return payload.offers || payload.items || payload.deals || payload.data || payload.results || null;
+}
+
+function normalizeFeedCandidate(candidate = {}) {
+  const source = candidate && typeof candidate === 'object' ? candidate : {};
+  const flatFields = {};
+
+  for (const [key, value] of Object.entries(source)) {
+    const normalizedKey = normalizeKey(key);
+
+    if (normalizedKey && !isPresent(flatFields[normalizedKey]) && isPresent(value)) {
+      flatFields[normalizedKey] = primitiveValue(value);
+    }
+  }
+
+  const itemInfo = source.ItemInfo || source.itemInfo || {};
+  const images = source.Images || source.images || {};
+  const offers = source.Offers || source.offers || {};
+  const listing = firstPresent(offers.Listings?.[0], offers.listings?.[0], source.listing, {});
+  const price = listing.Price || listing.price || source.Price || source.priceInfo || {};
+  const savings = price.Savings || price.savings || {};
+  const savingBasis = listing.SavingBasis || listing.savingBasis || price.SavingBasis || price.savingBasis || {};
+  const computedBefore = sumMoney(price.Amount, savings.Amount);
+
+  const fields = {
+    title: firstPresent(
+      flatFields.title,
+      source.title,
+      source.name,
+      itemInfo.Title?.DisplayValue,
+      itemInfo.title?.displayValue
+    ),
+    url: firstPresent(
+      flatFields.url,
+      source.url,
+      source.affiliateUrl,
+      source.detailPageUrl,
+      source.DetailPageURL,
+      source.link
+    ),
+    image: imageValue(firstPresent(
+      flatFields.image,
+      source.image,
+      source.imageUrl,
+      source.image_url,
+      source.primaryImage,
+      images.Primary?.Large?.URL,
+      images.Primary?.Medium?.URL,
+      images.primary?.large?.url,
+      images.primary?.medium?.url
+    )),
+    before: firstPresent(
+      flatFields.before,
+      source.beforePrice,
+      source.wasPrice,
+      source.listPrice,
+      source.originalPrice,
+      savingBasis.Amount,
+      savingBasis.amount,
+      computedBefore
+    ),
+    after: firstPresent(
+      flatFields.after,
+      source.afterPrice,
+      source.salePrice,
+      source.currentPrice,
+      source.dealPrice,
+      price.Amount,
+      price.amount
+    ),
+    rating: firstPresent(
+      flatFields.rating,
+      source.rating,
+      source.customerRating,
+      source.averageRating,
+      source.stars
+    ),
+    reviews: firstPresent(
+      flatFields.reviews,
+      source.reviews,
+      source.reviewCount,
+      source.reviewerCount,
+      source.ratingsCount,
+      source.totalReviews
+    ),
+    category: firstPresent(
+      flatFields.category,
+      source.category,
+      source.niche,
+      source.department,
+      source.productGroup
+    )
+  };
+
+  return {
+    fields,
+    sourceName: cleanText(firstPresent(source.source, source.sourceName, source.provider, 'deal feed')),
+    foundAt: cleanText(firstPresent(source.foundAt, source.updatedAt, source.createdAt, new Date().toISOString()))
+  };
+}
+
+async function buildScanDedupKey(offer) {
+  const basis = offer.asin || offer.affiliateUrl || offer.sourceUrl || `${offer.title}:${offer.afterPrice}`;
+  return `scan:${await hashText(basis)}`;
+}
+
+async function hashText(value) {
+  const data = new TextEncoder().encode(String(value));
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+    .slice(0, 32);
+}
+
+async function saveScanStatus(env, status) {
+  if (!env.OFFERS_KV) {
+    return;
+  }
+
+  await env.OFFERS_KV.put(SCAN_STATE_KEY, JSON.stringify(status), {
+    expirationTtl: 14 * 24 * 60 * 60
+  });
+}
+
+async function getScanStatus(env) {
+  if (!env.OFFERS_KV) {
+    return null;
+  }
+
+  return env.OFFERS_KV.get(SCAN_STATE_KEY, 'json');
+}
+
+function getScannerConfig(env, options = {}) {
+  const limit = clampInteger(
+    options.limit || env.MAX_SCAN_CANDIDATES || DEFAULT_SCAN_LIMIT,
+    1,
+    MAX_SCAN_LIMIT
+  );
+  const feedUrl = cleanText(env.DEAL_FEED_URL || env.SCANNER_FEED_URL || '');
+
+  return {
+    enabled: isScannerEnabled(env),
+    feedUrl,
+    feedLabel: feedUrl ? hostnameFromUrl(feedUrl) : 'deal feed',
+    feedBearerToken: cleanText(env.DEAL_FEED_BEARER_TOKEN || ''),
+    adminChatId: String(env.TELEGRAM_ADMIN_CHAT_ID || options.replyChatId || ''),
+    limit
+  };
+}
+
+function isScannerEnabled(env) {
+  return cleanKey(env.SCAN_ENABLED || 'false') === 'true';
+}
+
+function parseScanLimit(text) {
+  const match = text.match(/^\/scan(?:@\w+)?(?:\s+(\d{1,2}))?/i);
+  return match?.[1] ? Number.parseInt(match[1], 10) : undefined;
+}
+
+function formatScanSummary(result) {
+  if (result.status === 'missing_source') {
+    return [
+      '<b>Scanner de ofertas instalado</b>',
+      '',
+      'Falta conectar la fuente real de ofertas: <code>DEAL_FEED_URL</code>.',
+      'Ese feed debe venir de Amazon Creators API/PA API o de una fuente autorizada y devolver precio, imagen, rating, reviews, categoria y link.',
+      '',
+      'Cuando lo conectemos, el bot te mandara cada candidato para aprobar o rechazar antes de publicarlo.'
+    ].join('\n');
+  }
+
+  if (result.status === 'error') {
+    return [
+      '<b>Scanner de ofertas</b>',
+      '',
+      `Error: ${escapeHtml(result.message || 'unknown error')}`
+    ].join('\n');
+  }
+
+  return [
+    '<b>Scanner de ofertas</b>',
+    '',
+    `Revisadas: ${result.checked}`,
+    `Procesadas: ${result.processed}`,
+    `Nuevas para aprobar: ${result.queued}`,
+    `Duplicadas: ${result.duplicates}`,
+    `Fuera de reglas: ${result.invalid}`,
+    result.notifyErrors ? `Errores al mandar preview: ${result.notifyErrors}` : null,
+    '',
+    result.queued
+      ? 'Te mande las nuevas ofertas por privado con botones de aprobar/rechazar.'
+      : 'No encontre ofertas nuevas que pasen el filtro en este scan.'
+  ].filter(Boolean).join('\n');
+}
+
+function formatLastScan(scanStatus) {
+  if (!scanStatus) {
+    return 'n/a';
+  }
+
+  const when = scanStatus.completedAt || scanStatus.startedAt || 'n/a';
+  const queued = Number.isFinite(scanStatus.queued) ? scanStatus.queued : 0;
+  return `${when} (${scanStatus.status}, ${queued} nuevas)`;
+}
+
+function firstPresent(...values) {
+  return values.find((value) => isPresent(value));
+}
+
+function isPresent(value) {
+  return value !== undefined && value !== null && value !== '';
+}
+
+function primitiveValue(value) {
+  if (Array.isArray(value)) {
+    return primitiveValue(value[0]);
+  }
+
+  if (value && typeof value === 'object') {
+    return firstPresent(value.url, value.URL, value.href, value.DisplayValue, value.displayValue, value.Amount, value.amount);
+  }
+
+  return value;
+}
+
+function imageValue(value) {
+  if (Array.isArray(value)) {
+    return imageValue(value[0]);
+  }
+
+  if (value && typeof value === 'object') {
+    return firstPresent(value.url, value.URL, value.src, value.href);
+  }
+
+  return value;
+}
+
+function sumMoney(left, right) {
+  const leftNumber = Number(left);
+  const rightNumber = Number(right);
+
+  if (!Number.isFinite(leftNumber) || !Number.isFinite(rightNumber)) {
+    return undefined;
+  }
+
+  return leftNumber + rightNumber;
+}
+
+function clampInteger(value, min, max) {
+  const parsed = Number.parseInt(String(value), 10);
+
+  if (!Number.isFinite(parsed)) {
+    return min;
+  }
+
+  return Math.min(max, Math.max(min, parsed));
+}
+
+function hostnameFromUrl(value) {
+  try {
+    return new URL(value).hostname;
+  } catch {
+    return 'deal feed';
+  }
+}
+
 async function sendOfferReview(chatId, offer, warnings, telegram) {
   const replyMarkup = {
     inline_keyboard: [
@@ -493,6 +1023,10 @@ function parseOfferCommand(text, rules) {
     ? parseKeyValueBody(body)
     : parsePipeBody(body);
 
+  return validateOfferFields(rawFields, rules);
+}
+
+function validateOfferFields(rawFields, rules) {
   const errors = [];
   const warnings = [];
 
@@ -627,6 +1161,8 @@ function formatReviewCaption(offer, warnings = [], status = 'Pendiente') {
     `Rating: ${offer.rating}`,
     `Reviews: ${formatReviewCount(offer.reviewCount)}`,
     offer.asin ? `ASIN: ${escapeHtml(offer.asin)}` : null,
+    offer.scanSource ? `Fuente: ${escapeHtml(offer.scanSource)}` : null,
+    offer.foundAt ? `Detectada: ${escapeHtml(offer.foundAt)}` : null,
     '',
     `<a href="${escapeHtml(offer.affiliateUrl)}">Abrir link afiliado</a>`,
     warningBlock
@@ -680,6 +1216,7 @@ function helpText(message, env) {
     '',
     'Comandos:',
     '/offer - Crear una oferta pendiente',
+    '/scan - Buscar ofertas nuevas y mandarlas a aprobacion',
     '/rules - Ver reglas del filtro',
     '/status - Ver estado del bot',
     '/chatid - Ver IDs para configurar Telegram'

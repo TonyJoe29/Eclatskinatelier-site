@@ -11,6 +11,7 @@ Cloudflare Workers is a better free fit than a Render background worker because 
 3. Stores pending offers in Workers KV.
 4. Sends you a private preview with `Aprobar` / `Rechazar`.
 5. Publishes approved offers to `TELEGRAM_GROUP_CHAT_ID`.
+6. Runs a scheduled offer scanner every 30 minutes when a compliant feed is configured.
 
 ## Setup
 
@@ -51,9 +52,55 @@ TELEGRAM_BOT_TOKEN=
 TELEGRAM_ADMIN_CHAT_ID=
 TELEGRAM_GROUP_CHAT_ID=
 TELEGRAM_WEBHOOK_SECRET=
+SCAN_ENABLED=true
+MAX_SCAN_CANDIDATES=5
+DEAL_FEED_URL=
+DEAL_FEED_BEARER_TOKEN=
 ```
 
 `TELEGRAM_WEBHOOK_SECRET` can be any long random string. Telegram sends it back in the `X-Telegram-Bot-Api-Secret-Token` header.
+
+## Offer scanner
+
+The scanner is wired for Cloudflare Cron Triggers and can also be run manually from Telegram with:
+
+```text
+/scan
+```
+
+Use `/scan 10` to process up to 10 candidates in one run. The Worker deduplicates scanned candidates for 7 days, stores valid candidates as pending offers, and sends the admin a private preview with approval buttons. The group still only receives approved offers.
+
+The scanner expects a compliant source such as Amazon Creators API/Product Advertising API or your own normalized deal feed. It does not scrape Amazon pages.
+
+Configure the source as Cloudflare secrets:
+
+```bash
+npx wrangler secret put DEAL_FEED_URL
+npx wrangler secret put DEAL_FEED_BEARER_TOKEN
+```
+
+`DEAL_FEED_BEARER_TOKEN` is optional. `DEAL_FEED_URL` should return JSON as an array or as `offers`, `items`, `deals`, `data`, or `results`:
+
+```json
+{
+  "offers": [
+    {
+      "title": "Maybelline Lash Sensational Sky High Mascara",
+      "url": "https://www.amazon.com/dp/B08H4FSGDW",
+      "image": "https://example.com/product.jpg",
+      "before": 14.99,
+      "after": 10.99,
+      "rating": 4.5,
+      "reviews": 85000,
+      "category": "makeup",
+      "source": "Amazon Creators API",
+      "foundAt": "2026-05-25T18:00:00.000Z"
+    }
+  ]
+}
+```
+
+The same MVP rules apply: minimum discount, review count, rating, category, Amazon US affiliate tag, and public image URL.
 
 ## Deploy
 
@@ -64,6 +111,7 @@ npx wrangler secret put TELEGRAM_BOT_TOKEN
 npx wrangler secret put TELEGRAM_ADMIN_CHAT_ID
 npx wrangler secret put TELEGRAM_GROUP_CHAT_ID
 npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
+npx wrangler secret put DEAL_FEED_URL
 ```
 
 Deploy:
@@ -119,4 +167,4 @@ Expected response:
 {"ok":true,"service":"eclatskinatelier-telegram-bot"}
 ```
 
-Then send `/status` to the bot privately.
+Then send `/status` to the bot privately. Send `/scan` to trigger a manual scan; if no `DEAL_FEED_URL` is configured yet, the bot will explain that the scanner is installed and waiting for the feed.

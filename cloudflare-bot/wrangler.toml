@@ -14,3 +14,8 @@ POST_LANGUAGE = "en"
 MIN_DISCOUNT_PERCENT = "5"
 MIN_REVIEW_COUNT = "1000"
 MIN_RATING = "4"
+SCAN_ENABLED = "true"
+MAX_SCAN_CANDIDATES = "5"
+
+[triggers]
+crons = ["*/30 * * * *"]
