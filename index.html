@@ -528,6 +528,37 @@
     font-size: 0.82rem;
     line-height: 1.65;
   }
+  .drop-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 18px;
+  }
+  .drop-actions a {
+    align-items: center;
+    display: inline-flex;
+    font-size: 0.68rem;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    min-height: 38px;
+    padding: 9px 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .drop-shop {
+    background: var(--rose-dark);
+    color: white;
+  }
+  .drop-shop:hover { background: var(--rose); }
+  .drop-filter {
+    border: 1px solid var(--sage-light);
+    color: var(--sage);
+  }
+  .drop-filter:hover {
+    background: var(--sage);
+    color: white;
+  }
   .trust-card.featured {
     background: var(--rose-dark);
     color: white;
@@ -1392,12 +1423,12 @@
     </button>
     <nav id="site-nav">
       <a href="#start">Start Here</a>
-      <a href="#trending">Trending</a>
+      <a href="#today-drops">Current Favs</a>
       <a href="#routines">Routines</a>
       <a href="#weekly-edit">Weekly Edit</a>
       <a href="#celebrity">Celebrity Beauty</a>
       <a href="#blog">Blog</a>
-      <a href="#catalog">Shop</a>
+      <a href="#trending">Shop</a>
       <a href="#about">About</a>
     </nav>
   </div>
@@ -1411,12 +1442,12 @@
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">May 2026 · Amazon US Beauty</p>
+  <p class="hero-eyebrow">June 2026 · Amazon US Beauty</p>
   <h1>Beauty Finds I Would<br><em>Actually Build Around</em></h1>
   <p class="hero-sub">I look for skincare, makeup and bodycare that are easy to understand, easy to use, and worth saving before your next Amazon order.</p>
   <div class="hero-cta">
-    <a href="#start" class="btn-primary">Start Here</a>
-    <a href="#trending" class="btn-secondary">Shop Current Picks</a>
+    <a href="#today-drops" class="btn-primary">Shop Current Picks</a>
+    <a href="#start" class="btn-secondary">Find My Routine</a>
   </div>
   <div class="hero-stats">
     <div class="stat-card">
@@ -1464,52 +1495,72 @@
 <section class="drops-section" id="today-drops">
   <div class="section-head">
     <div>
-      <p class="section-eyebrow">May 25, 2026 · 5 Pins & 2 Reels</p>
-      <h2>Today's Reviewed Beauty Picks</h2>
+      <p class="section-eyebrow">June 4-6, 2026 · Recent Pinterest Picks</p>
+      <h2>Current Favs From This Week</h2>
     </div>
     <div class="line"></div>
   </div>
   <div class="drops-grid">
-    <a class="drop-card" href="#trending" data-filter-link="k-beauty">
-      <div class="drop-art" data-catalog="zero-pore" data-official="true"></div>
+    <article class="drop-card">
+      <div class="drop-art" data-catalog="neutrogena-tint" data-official="true"></div>
       <div class="drop-copy">
-        <small>K-beauty / Toner pads</small>
-        <h3>Medicube Zero Pore Pad 2.0</h3>
-        <p>A texture-night toner pad for K-beauty routine education, pores and realistic PM routine content.</p>
+        <small>Tinted SPF</small>
+        <h3>Neutrogena Purescreen+ Mineral UV Tint</h3>
+        <p>A recent Pinterest focus for sheer tint, lightweight texture and SPF that can sit under makeup.</p>
+        <div class="drop-actions">
+          <a class="drop-shop" href="https://amzn.to/4uoa5sB" target="_blank" rel="nofollow sponsored noopener">Shop Amazon</a>
+          <a class="drop-filter" href="#trending" data-filter-link="spf">Compare SPF</a>
+        </div>
       </div>
-    </a>
-    <a class="drop-card" href="#trending" data-filter-link="acne">
-      <div class="drop-art" data-catalog="acne" data-official="true"></div>
+    </article>
+    <article class="drop-card">
+      <div class="drop-art" data-catalog="laroche" data-official="true"></div>
       <div class="drop-copy">
-        <small>Acne basics</small>
-        <h3>Hero Cosmetics Mighty Patch Original</h3>
-        <p>A simple overnight spot-care pick for whiteheads, routine basics and saveable acne content.</p>
+        <small>SPF + Makeup</small>
+        <h3>La Roche-Posay Anthelios SPF 40</h3>
+        <p>A researched tinted mineral sunscreen pick for summer routines and makeup-layering comparisons.</p>
+        <div class="drop-actions">
+          <a class="drop-shop" href="https://amzn.to/3RrZSg6" target="_blank" rel="nofollow sponsored noopener">Shop Amazon</a>
+          <a class="drop-filter" href="#trending" data-filter-link="spf">See SPF Picks</a>
+        </div>
       </div>
-    </a>
-    <a class="drop-card" href="#trending" data-filter-link="makeup">
+    </article>
+    <article class="drop-card">
       <div class="drop-art" data-catalog="lash" data-official="true"></div>
       <div class="drop-copy">
         <small>Makeup under $20</small>
         <h3>Maybelline Sky High Mascara</h3>
-        <p>A before/after Reel pick for one coat versus two coats, drugstore makeup and quick visible results.</p>
+        <p>A recent mascara content pick for visible length, one-coat comparisons and affordable makeup routines.</p>
+        <div class="drop-actions">
+          <a class="drop-shop" href="https://amzn.to/4tRt1Ph" target="_blank" rel="nofollow sponsored noopener">Shop Amazon</a>
+          <a class="drop-filter" href="#trending" data-filter-link="makeup">See Makeup</a>
+        </div>
       </div>
-    </a>
-    <a class="drop-card" href="#trending" data-filter-link="bodycare">
+    </article>
+    <article class="drop-card">
       <div class="drop-art" data-catalog="body" data-official="true"></div>
       <div class="drop-copy">
         <small>Bodycare</small>
         <h3>eos Vanilla Cashmere Lotion</h3>
-        <p>A vanilla after-shower routine product for bodycare pins, texture videos and affordable scent layering.</p>
+        <p>A current bodycare favorite for warm vanilla scent, after-shower routines and affordable layering.</p>
+        <div class="drop-actions">
+          <a class="drop-shop" href="https://amzn.to/42UwKRk" target="_blank" rel="nofollow sponsored noopener">Shop Amazon</a>
+          <a class="drop-filter" href="#trending" data-filter-link="bodycare">See Bodycare</a>
+        </div>
       </div>
-    </a>
-    <a class="drop-card" href="#trending" data-filter-link="fragrance">
+    </article>
+    <article class="drop-card">
       <div class="drop-art" data-catalog="cheirosa" data-official="true"></div>
       <div class="drop-copy">
         <small>Women's fragrance</small>
         <h3>Sol de Janeiro Cheirosa 62 Perfume Mist</h3>
-        <p>A pistachio, salted caramel and vanilla body mist for summer scent-stacking content.</p>
+        <p>A summer scent-stacking pick built around pistachio, salted caramel and vanilla notes.</p>
+        <div class="drop-actions">
+          <a class="drop-shop" href="https://amzn.to/4u5PSHe" target="_blank" rel="nofollow sponsored noopener">Shop Amazon</a>
+          <a class="drop-filter" href="#trending" data-filter-link="fragrance">See Fragrance</a>
+        </div>
       </div>
-    </a>
+    </article>
   </div>
 </section>
 
@@ -1988,7 +2039,7 @@
 
     <div class="section-head">
       <div>
-        <p class="section-eyebrow">May 2026 · Tested, Researched & Saved</p>
+        <p class="section-eyebrow">June 2026 · Tested, Researched & Saved</p>
         <h2>Current Beauty Picks With Routine Notes</h2>
       </div>
       <div class="line"></div>
@@ -3031,8 +3082,8 @@
   </div>
 </footer>
 
-<a class="mobile-bottom-cta" href="#start">
-  <span>Start Here</span>
+<a class="mobile-bottom-cta" href="#today-drops">
+  <span>Current Favs</span>
   <span>Shop the edit</span>
 </a>
 
