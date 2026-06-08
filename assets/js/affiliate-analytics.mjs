@@ -104,4 +104,3 @@ document.addEventListener("click", (event) => {
   const link = event.target.closest?.("a[href]");
   if (link) trackAffiliateClick(link);
 });
-
