@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eclatskinatelier-site.onrender.com/sitemap.xml
