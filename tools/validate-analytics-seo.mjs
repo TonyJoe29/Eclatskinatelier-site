@@ -64,6 +64,14 @@ for (const [relativePath, canonical] of realPages) {
     matches(html, /<script\s+type=["']module["']\s+src=["'](?:\.{0,2}\/)*assets\/js\/affiliate-analytics\.mjs["']><\/script>/i),
     `${relativePath}: missing affiliate analytics module`,
   );
+  check(
+    matches(html, /<script\s+src=["'](?:\.{0,2}\/)*assets\/js\/posthog-init\.js["']><\/script>/i),
+    `${relativePath}: missing PostHog loader`,
+  );
+  check(
+    matches(html, /<script\s+type=["']module["']\s+src=["'](?:\.{0,2}\/)*assets\/js\/posthog-events\.mjs["']><\/script>/i),
+    `${relativePath}: missing PostHog events module`,
+  );
 }
 
 const homepage = read("index.html");
@@ -82,6 +90,14 @@ check(
 check(
   matches(template, /<script\s+type=["']module["']\s+src=["']\.\.\/assets\/js\/affiliate-analytics\.mjs["']><\/script>/i),
   "posts/post-template.html: missing affiliate analytics module",
+);
+check(
+  matches(template, /<script\s+src=["']\.\.\/assets\/js\/posthog-init\.js["']><\/script>/i),
+  "posts/post-template.html: missing PostHog loader",
+);
+check(
+  matches(template, /<script\s+type=["']module["']\s+src=["']\.\.\/assets\/js\/posthog-events\.mjs["']><\/script>/i),
+  "posts/post-template.html: missing PostHog events module",
 );
 check(
   (template.match(/googletagmanager\.com\/gtag\/js\?id=G-PEVS2KHDT5/g) || []).length === 1,
@@ -124,6 +140,7 @@ if (fs.existsSync(analyticsPath)) {
     "link_url",
     "link_position",
     "affiliate_network",
+    "amazon_tracking_id",
     "transport_type",
   ]) {
     check(source.includes(field), `affiliate analytics: missing ${field}`);
@@ -141,6 +158,54 @@ if (fs.existsSync(analyticsPath)) {
     syntaxCheck.status === 0,
     `affiliate analytics: invalid syntax (${syntaxCheck.stderr.trim()})`,
   );
+}
+
+const posthogInitPath = path.join(root, "assets/js/posthog-init.js");
+check(fs.existsSync(posthogInitPath), "PostHog loader is missing");
+if (fs.existsSync(posthogInitPath)) {
+  const source = read("assets/js/posthog-init.js");
+  check(source.includes("phc_panyUJfgjcE2z8dMouBxGxziSbta8Fe8R8aiFHqLin7v"), "PostHog loader: project token missing");
+  check(source.includes("https://us.i.posthog.com"), "PostHog loader: US API host missing");
+  check(/autocapture:\s*false/.test(source), "PostHog loader: autocapture must be disabled");
+  check(/capture_pageview:\s*false/.test(source), "PostHog loader: automatic pageview must be disabled");
+  check(/capture_pageleave:\s*false/.test(source), "PostHog loader: pageleave must be disabled");
+  check(/person_profiles:\s*"identified_only"/.test(source), "PostHog loader: identified-only profiles missing");
+  check(/maskAllInputs:\s*true/.test(source), "PostHog loader: input masking missing");
+
+  const syntaxCheck = spawnSync(process.execPath, ["--check", posthogInitPath], {
+    encoding: "utf8",
+  });
+  check(syntaxCheck.status === 0, `PostHog loader: invalid syntax (${syntaxCheck.stderr.trim()})`);
+}
+
+const posthogEventsPath = path.join(root, "assets/js/posthog-events.mjs");
+check(fs.existsSync(posthogEventsPath), "PostHog events module is missing");
+if (fs.existsSync(posthogEventsPath)) {
+  const source = read("assets/js/posthog-events.mjs");
+  for (const eventName of ["$pageview", "product_viewed"]) {
+    check(source.includes(eventName), `PostHog events: missing ${eventName}`);
+  }
+  for (const field of [
+    "$current_url",
+    "page_path",
+    "page_title",
+    "content_type",
+    "product_name",
+    "asin",
+    "category",
+    "content_id",
+    "product_position",
+  ]) {
+    check(source.includes(field), `PostHog events: missing ${field}`);
+  }
+  for (const utm of ["utm_source", "utm_medium", "utm_campaign", "utm_content"]) {
+    check(source.includes(utm), `PostHog events: missing ${utm}`);
+  }
+
+  const syntaxCheck = spawnSync(process.execPath, ["--check", posthogEventsPath], {
+    encoding: "utf8",
+  });
+  check(syntaxCheck.status === 0, `PostHog events: invalid syntax (${syntaxCheck.stderr.trim()})`);
 }
 
 if (failures.length) {

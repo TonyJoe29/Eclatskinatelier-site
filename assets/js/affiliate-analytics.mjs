@@ -49,6 +49,17 @@ function inferLinkPosition(link) {
   return `${sectionName}-${Math.max(amazonLinks.indexOf(link) + 1, 1)}`;
 }
 
+function inferTrackingId(link, url) {
+  return link.dataset.amazonTrackingId?.trim() || url.searchParams.get("tag") || "";
+}
+
+function campaignProperties() {
+  const search = new URLSearchParams(window.location.search);
+  return Object.fromEntries(
+    UTM_PARAMETERS.map((parameter) => [parameter, search.get(parameter) || ""]),
+  );
+}
+
 function trackAffiliateClick(link) {
   let url;
   try {
@@ -56,17 +67,26 @@ function trackAffiliateClick(link) {
   } catch {
     return;
   }
-  if (!isAmazonUrl(url) || typeof window.gtag !== "function") return;
+  if (!isAmazonUrl(url)) return;
 
-  window.gtag("event", "affiliate_click", {
+  const properties = {
     product_name: inferProductName(link),
     asin: inferAsin(link, url),
     page_path: window.location.pathname,
     link_url: url.href,
     link_position: inferLinkPosition(link),
     affiliate_network: link.dataset.affiliateNetwork || "amazon",
+    amazon_tracking_id: inferTrackingId(link, url),
+    ...campaignProperties(),
     transport_type: "beacon",
-  });
+  };
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "affiliate_click", properties);
+  }
+  if (typeof window.posthog?.capture === "function") {
+    window.posthog.capture("affiliate_click", properties);
+  }
 }
 
 function preserveCampaignParameters() {
