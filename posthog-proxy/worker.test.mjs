@@ -24,7 +24,7 @@ test("routes session replay assets through the asset host", () => {
 
 test("routes the Google tag through the first-party gateway", () => {
   const route = routeAnalyticsRequest(
-    new URL("https://proxy.example/ga/gtag/js?id=G-PEVS2KHDT5"),
+    new URL("https://proxy.example/metrics/client.js?id=G-PEVS2KHDT5"),
   );
   assert.equal(route.origin, "https://www.googletagmanager.com");
   assert.equal(route.pathname, "/gtag/js");
@@ -33,7 +33,7 @@ test("routes the Google tag through the first-party gateway", () => {
 
 test("routes GA4 collection through the first-party gateway", () => {
   const route = routeAnalyticsRequest(
-    new URL("https://proxy.example/ga/g/collect?v=2&tid=G-PEVS2KHDT5"),
+    new URL("https://proxy.example/metrics/g/collect?v=2&tid=G-PEVS2KHDT5"),
   );
   assert.equal(route.origin, "https://www.google-analytics.com");
   assert.equal(route.pathname, "/g/collect");

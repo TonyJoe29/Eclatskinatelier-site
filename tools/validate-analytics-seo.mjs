@@ -49,7 +49,7 @@ for (const [relativePath, canonical] of realPages) {
     `${relativePath}: missing exact canonical`,
   );
   check(
-    (html.match(/eclat-events\.eclatskinatelier\.workers\.dev\/ga\/gtag\/js\?id=G-PEVS2KHDT5/g) || []).length === 1,
+    (html.match(/eclat-events\.eclatskinatelier\.workers\.dev\/metrics\/client\.js\?id=G-PEVS2KHDT5/g) || []).length === 1,
     `${relativePath}: first-party GA4 loader must appear exactly once`,
   );
   check(
@@ -57,7 +57,7 @@ for (const [relativePath, canonical] of realPages) {
     `${relativePath}: GA4 config must appear exactly once`,
   );
   check(
-    matches(html, /server_container_url:\s*['"]https:\/\/eclat-events\.eclatskinatelier\.workers\.dev\/ga['"]/),
+    matches(html, /server_container_url:\s*['"]https:\/\/eclat-events\.eclatskinatelier\.workers\.dev\/metrics['"]/),
     `${relativePath}: missing first-party GA4 collection URL`,
   );
   check(
@@ -104,7 +104,7 @@ check(
   "posts/post-template.html: missing PostHog events module",
 );
 check(
-  (template.match(/eclat-events\.eclatskinatelier\.workers\.dev\/ga\/gtag\/js\?id=G-PEVS2KHDT5/g) || []).length === 1,
+  (template.match(/eclat-events\.eclatskinatelier\.workers\.dev\/metrics\/client\.js\?id=G-PEVS2KHDT5/g) || []).length === 1,
   "posts/post-template.html: first-party GA4 loader must appear exactly once",
 );
 

@@ -10,10 +10,13 @@ export function routePostHogRequest(url) {
 }
 
 export function routeAnalyticsRequest(url) {
-  if (!url.pathname.startsWith("/ga/")) return null;
+  if (!url.pathname.startsWith("/metrics/")) return null;
 
-  const pathname = url.pathname.slice(3) || "/";
-  const host = pathname.startsWith("/gtag/")
+  const pathname =
+    url.pathname === "/metrics/client.js"
+      ? "/gtag/js"
+      : url.pathname.slice("/metrics".length) || "/";
+  const host = pathname === "/gtag/js"
     ? GOOGLE_TAG_HOST
     : GOOGLE_ANALYTICS_HOST;
   return new URL(`${pathname}${url.search}`, host);
