@@ -1,10 +1,22 @@
 const API_HOST = "https://us.i.posthog.com";
 const ASSET_HOST = "https://us-assets.i.posthog.com";
+const GOOGLE_TAG_HOST = "https://www.googletagmanager.com";
+const GOOGLE_ANALYTICS_HOST = "https://www.google-analytics.com";
 
 export function routePostHogRequest(url) {
   const assetRequest =
     url.pathname.startsWith("/static/") || url.pathname.startsWith("/array/");
   return new URL(`${url.pathname}${url.search}`, assetRequest ? ASSET_HOST : API_HOST);
+}
+
+export function routeAnalyticsRequest(url) {
+  if (!url.pathname.startsWith("/ga/")) return null;
+
+  const pathname = url.pathname.slice(3) || "/";
+  const host = pathname.startsWith("/gtag/")
+    ? GOOGLE_TAG_HOST
+    : GOOGLE_ANALYTICS_HOST;
+  return new URL(`${pathname}${url.search}`, host);
 }
 
 function proxyHeaders(request, target) {
@@ -42,9 +54,12 @@ async function forward(request, target) {
 
 export default {
   async fetch(request, env, ctx) {
-    const target = routePostHogRequest(new URL(request.url));
+    const url = new URL(request.url);
+    const analyticsTarget = routeAnalyticsRequest(url);
+    const target = analyticsTarget || routePostHogRequest(url);
     const isAsset =
-      target.origin === ASSET_HOST && request.method === "GET";
+      (target.origin === ASSET_HOST || target.origin === GOOGLE_TAG_HOST) &&
+      request.method === "GET";
 
     if (!isAsset) return forward(request, target);
 
