@@ -1,0 +1,5 @@
+name = "eclat-events"
+main = "src/worker.js"
+compatibility_date = "2026-06-11"
+workers_dev = true
+preview_urls = false

@@ -109,9 +109,10 @@ for (const relativePath of ["index.html", ...realPages.slice(1).map(([file]) => 
   const links = [...html.matchAll(/<a\b([^>]*href=["'](?:https?:\/\/)?(?:www\.)?(?:amazon\.com|amzn\.to)[^"']*["'][^>]*)>/gi)];
   for (const [, attributes] of links) {
     check(/data-product-name=["'][^"']+["']/i.test(attributes), `${relativePath}: Amazon link missing data-product-name`);
-    check(/data-asin=["'][^"']*["']/i.test(attributes), `${relativePath}: Amazon link missing data-asin`);
+    check(/data-asin=["'][A-Z0-9]{10}["']/i.test(attributes), `${relativePath}: Amazon link missing valid data-asin`);
     check(/data-link-position=["'][^"']+["']/i.test(attributes), `${relativePath}: Amazon link missing data-link-position`);
     check(/data-affiliate-network=["']amazon["']/i.test(attributes), `${relativePath}: Amazon link missing data-affiliate-network`);
+    check(/data-amazon-tracking-id=["']eclatwebsite-20["']/i.test(attributes), `${relativePath}: Amazon link missing website tracking ID`);
   }
 }
 
@@ -165,10 +166,11 @@ check(fs.existsSync(posthogInitPath), "PostHog loader is missing");
 if (fs.existsSync(posthogInitPath)) {
   const source = read("assets/js/posthog-init.js");
   check(source.includes("phc_panyUJfgjcE2z8dMouBxGxziSbta8Fe8R8aiFHqLin7v"), "PostHog loader: project token missing");
-  check(source.includes("https://us.i.posthog.com"), "PostHog loader: US API host missing");
+  check(source.includes("https://eclat-events.eclatskinatelier.workers.dev"), "PostHog loader: reverse proxy host missing");
+  check(source.includes('ui_host: "https://us.posthog.com"'), "PostHog loader: US UI host missing");
   check(/autocapture:\s*false/.test(source), "PostHog loader: autocapture must be disabled");
   check(/capture_pageview:\s*false/.test(source), "PostHog loader: automatic pageview must be disabled");
-  check(/capture_pageleave:\s*false/.test(source), "PostHog loader: pageleave must be disabled");
+  check(/capture_pageleave:\s*true/.test(source), "PostHog loader: pageleave must be enabled");
   check(/person_profiles:\s*"identified_only"/.test(source), "PostHog loader: identified-only profiles missing");
   check(/maskAllInputs:\s*true/.test(source), "PostHog loader: input masking missing");
 
@@ -185,6 +187,7 @@ if (fs.existsSync(posthogEventsPath)) {
   for (const eventName of ["$pageview", "product_viewed"]) {
     check(source.includes(eventName), `PostHog events: missing ${eventName}`);
   }
+  check(source.includes("qa_test"), "PostHog events: missing qa_test property");
   for (const field of [
     "$current_url",
     "page_path",

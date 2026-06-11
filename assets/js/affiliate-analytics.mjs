@@ -60,6 +60,18 @@ function campaignProperties() {
   );
 }
 
+function isQaTest() {
+  const hostname = window.location.hostname;
+  const requested = new URLSearchParams(window.location.search).get("qa_test");
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    requested === "1" ||
+    requested === "true"
+  );
+}
+
 function trackAffiliateClick(link) {
   let url;
   try {
@@ -77,6 +89,7 @@ function trackAffiliateClick(link) {
     link_position: inferLinkPosition(link),
     affiliate_network: link.dataset.affiliateNetwork || "amazon",
     amazon_tracking_id: inferTrackingId(link, url),
+    qa_test: isQaTest(),
     ...campaignProperties(),
     transport_type: "beacon",
   };

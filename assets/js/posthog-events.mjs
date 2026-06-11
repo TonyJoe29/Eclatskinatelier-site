@@ -13,6 +13,18 @@ function campaignProperties() {
   );
 }
 
+function isQaTest() {
+  const hostname = window.location.hostname;
+  const requested = new URLSearchParams(window.location.search).get("qa_test");
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    requested === "1" ||
+    requested === "true"
+  );
+}
+
 function capture(eventName, properties) {
   if (typeof window.posthog?.capture !== "function") return;
   window.posthog.capture(eventName, properties);
@@ -52,6 +64,7 @@ function productContext(link) {
       page_path: window.location.pathname,
       content_id: container?.dataset.productId?.trim() || slugify(productName),
       product_position: link.dataset.linkPosition?.trim() || "",
+      qa_test: isQaTest(),
       ...campaignProperties(),
     },
   };
@@ -62,6 +75,7 @@ capture("$pageview", {
   page_path: window.location.pathname,
   page_title: document.title,
   content_type: contentType(),
+  qa_test: isQaTest(),
   ...campaignProperties(),
 });
 
