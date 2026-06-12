@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { routeAnalyticsRequest, routePostHogRequest } from "./src/worker.js";
+import {
+  buildGa4MeasurementPayload,
+  routeAnalyticsRequest,
+  routePostHogRequest,
+} from "./src/worker.js";
 
 test("routes SDK assets to the US asset host", () => {
   const route = routePostHogRequest(new URL("https://proxy.example/static/array.js?v=1"));
@@ -38,4 +42,45 @@ test("routes GA4 collection through the first-party gateway", () => {
   assert.equal(route.origin, "https://www.google-analytics.com");
   assert.equal(route.pathname, "/g/collect");
   assert.equal(route.search, "?v=2&tid=G-PEVS2KHDT5");
+});
+
+test("builds a GA4 affiliate event without accepting arbitrary event names", () => {
+  const payload = buildGa4MeasurementPayload({
+    client_id: "qa-client",
+    event_name: "affiliate_click",
+    params: {
+      product_name: "Halo Glow Liquid Filter",
+      asin: "B0B5MG6PHQ",
+      page_path: "/",
+      link_position: "homepage-amazon-01",
+      amazon_tracking_id: "eclatwebsite-20",
+      qa_test: true,
+      utm_source: "codex",
+    },
+  });
+
+  assert.deepEqual(payload, {
+    client_id: "qa-client",
+    events: [{
+      name: "affiliate_click",
+      params: {
+        product_name: "Halo Glow Liquid Filter",
+        asin: "B0B5MG6PHQ",
+        page_path: "/",
+        link_position: "homepage-amazon-01",
+        amazon_tracking_id: "eclatwebsite-20",
+        qa_test: true,
+        utm_source: "codex",
+      },
+    }],
+  });
+
+  assert.equal(
+    buildGa4MeasurementPayload({
+      client_id: "qa-client",
+      event_name: "not_allowed",
+      params: {},
+    }),
+    null,
+  );
 });

@@ -138,6 +138,18 @@ const analyticsPath = path.join(root, "assets/js/affiliate-analytics.mjs");
 check(fs.existsSync(analyticsPath), "affiliate analytics module is missing");
 if (fs.existsSync(analyticsPath)) {
   const source = read("assets/js/affiliate-analytics.mjs");
+  check(
+    source.includes("https://eclat-events.eclatskinatelier.workers.dev/metrics/event"),
+    "affiliate analytics: missing first-party GA4 event endpoint",
+  );
+  check(
+    matches(source, /sendGa4Event\(["']affiliate_click["']/),
+    "affiliate analytics: affiliate_click must use secure GA4 gateway",
+  );
+  check(
+    !matches(source, /gtag\(["']event["'],\s*["']affiliate_click["']/),
+    "affiliate analytics: affiliate_click must not be double-sent through gtag",
+  );
   for (const field of [
     "product_name",
     "asin",

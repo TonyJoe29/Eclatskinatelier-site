@@ -5,6 +5,8 @@ const UTM_PARAMETERS = [
   "utm_content",
   "utm_term",
 ];
+const GA4_EVENT_ENDPOINT =
+  "https://eclat-events.eclatskinatelier.workers.dev/metrics/event";
 
 function isAmazonUrl(url) {
   return /(^|\.)amazon\.com$|(^|\.)amzn\.to$/i.test(url.hostname);
@@ -72,6 +74,55 @@ function isQaTest() {
   );
 }
 
+function sessionValue(key, createValue) {
+  try {
+    const existing = window.sessionStorage.getItem(key);
+    if (existing) return existing;
+    const value = createValue();
+    window.sessionStorage.setItem(key, value);
+    return value;
+  } catch {
+    return createValue();
+  }
+}
+
+function ga4ClientId() {
+  return sessionValue(
+    "eclat_ga4_client_id",
+    () => `${Date.now()}.${Math.floor(Math.random() * 1_000_000_000)}`,
+  );
+}
+
+function ga4SessionId() {
+  return Number(sessionValue("eclat_ga4_session_id", () => String(Date.now())));
+}
+
+function sendGa4Event(eventName, properties) {
+  const payload = JSON.stringify({
+    client_id: ga4ClientId(),
+    event_name: eventName,
+    params: {
+      ...properties,
+      session_id: ga4SessionId(),
+      engagement_time_msec: 1,
+      debug_mode: isQaTest(),
+      page_location: window.location.href,
+    },
+  });
+
+  if (typeof navigator.sendBeacon === "function") {
+    const body = new Blob([payload], { type: "text/plain;charset=UTF-8" });
+    if (navigator.sendBeacon(GA4_EVENT_ENDPOINT, body)) return;
+  }
+
+  fetch(GA4_EVENT_ENDPOINT, {
+    method: "POST",
+    body: payload,
+    headers: { "Content-Type": "text/plain;charset=UTF-8" },
+    keepalive: true,
+  }).catch(() => {});
+}
+
 function trackAffiliateClick(link) {
   let url;
   try {
@@ -94,9 +145,7 @@ function trackAffiliateClick(link) {
     transport_type: "beacon",
   };
 
-  if (typeof window.gtag === "function") {
-    window.gtag("event", "affiliate_click", properties);
-  }
+  sendGa4Event("affiliate_click", properties);
   if (typeof window.posthog?.capture === "function") {
     window.posthog.capture("affiliate_click", properties);
   }
