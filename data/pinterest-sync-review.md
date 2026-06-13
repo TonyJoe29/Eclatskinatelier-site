@@ -2,6 +2,19 @@
 
 Items in this file were detected in recent Pinterest activity but were not published automatically because the exact affiliate link or product identity still needs verification.
 
+## 2026-06-13
+
+| Product or content lane | Pinterest evidence | Missing requirement | Status |
+|---|---|---|---|
+| Generic niacinamide serum review | 2026-06-12 pin titled `Clear Skin Secrets: Niacinamide Serum Review`; thumbnail shows creator only, not the product | Exact brand/SKU match before mapping to existing niacinamide affiliate entry | Hold |
+| Unlabeled serum bottle pin | 2026-06-12 pin about oily T-zone and breakouts points to `https://eclatskinatelier-site.onrender.com/?qa_test=1&utm_source=codex&utm_campaign=replay_final`; thumbnail shows a small serum bottle without readable label | Exact product identity and a clean public destination URL without QA params | Hold |
+| NYX Butter Gloss review pin | 2026-06-11 pin thumbnail clearly shows `NYX Butter Gloss` in shade `Praline` | Verified affiliate URL and product record in site data | Hold |
+| Butter Gloss day-one pin | 2026-06-11 pin thumbnail shows `NYX Butter Gloss`, but the exact shade/variant is not readable | Exact variant plus verified affiliate URL in site data | Hold |
+
+Products moved into `Current Favs` on this run:
+
+- None. The 2026-06-11 to 2026-06-12 pins did not clear identity plus affiliate validation.
+
 ## 2026-06-10
 
 | Product or content lane | Pinterest evidence | Missing requirement | Status |
