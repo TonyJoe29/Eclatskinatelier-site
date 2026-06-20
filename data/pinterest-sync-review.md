@@ -2,6 +2,14 @@
 
 Items in this file were detected in recent Pinterest activity but were not published automatically because the exact affiliate link or product identity still needs verification.
 
+## 2026-06-20
+
+No recent Pinterest pins were returned by `node tools/fetch-pinterest-feed.mjs --days 3 --limit 30 --write`, so no products were eligible for publication.
+
+Products moved into `Current Favs` on this run:
+
+- None. The feed contained 0 pins for the 3-day lookback window.
+
 ## 2026-06-13
 
 | Product or content lane | Pinterest evidence | Missing requirement | Status |
