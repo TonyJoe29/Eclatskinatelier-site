@@ -1510,8 +1510,8 @@
 <section class="drops-section" id="today-drops">
   <div class="section-head">
     <div>
-      <p class="section-eyebrow">June 8-12, 2026 - Verified Pinterest Picks</p>
-      <h2>Current Favs From This Week</h2>
+      <p class="section-eyebrow">Latest verified Pinterest picks · June 8-12, 2026</p>
+      <h2>Current Favs From Pinterest</h2>
     </div>
     <div class="line"></div>
   </div>
@@ -2040,7 +2040,7 @@
     <div class="product-tools">
       <label for="product-search">Find a product</label>
       <input id="product-search" class="product-search" type="search" placeholder="Search by product, brand, category or routine">
-      <span class="result-count" id="result-count">18 picks shown</span>
+      <span class="result-count" id="result-count">20 picks shown</span>
     </div>
 
     <div class="products-grid">
@@ -3144,6 +3144,8 @@
       applyProductFilter(active ? active.dataset.filter || 'all' : 'all');
     });
   }
+
+  applyProductFilter(document.querySelector('.pill.active')?.dataset.filter || 'all');
 
   // Smooth scroll for nav links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
