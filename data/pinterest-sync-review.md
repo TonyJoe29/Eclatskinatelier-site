@@ -2,6 +2,20 @@
 
 Items in this file were detected in recent Pinterest activity but were not published automatically because the exact affiliate link or product identity still needs verification.
 
+## 2026-07-30
+
+No recent Pinterest pins were returned by `node tools/fetch-pinterest-feed.mjs --days 3 --limit 30 --write`, so no products were eligible for publication.
+
+The public RSS feed still tops out at `2026-06-12T16:03:27.000Z`, so `Current Favs` was left unchanged instead of resurfacing older pins as if they were new.
+
+Useful corrections shipped on this run:
+
+- Refreshed `data/pinterest-feed-latest.json` so the public Pinterest snapshot reflects the 2026-07-30 fetch even though the 3-day window returned 0 pins.
+
+Products moved into `Current Favs` on this run:
+
+- None. The 2026-07-27 through 2026-07-30 lookback window contained 0 pins.
+
 ## 2026-07-28
 
 No recent Pinterest pins were returned by `node tools/fetch-pinterest-feed.mjs --days 3 --limit 30 --write`, so no products were eligible for publication.
